@@ -1,0 +1,75 @@
+﻿<Window
+    x:Class="BankA.Login"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:BankA"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Authorization"
+    Width="500"
+    Height="350"
+    FocusManager.FocusedElement="{Binding ElementName=login}"
+    mc:Ignorable="d">
+    <Window.DataContext>
+        <local:LoginViewModel />
+    </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" Command="{Binding Auth}" />
+    </Window.InputBindings>
+    <Window.Resources>
+        <!--<Style TargetType="TextBox" x:Key="login">
+            <Setter Property="Background" Value="Azure"/>
+        </Style>-->
+        <!--<Style TargetType="TextBlock"  x:Key="login2">
+            <Setter Property="Background" Value="Azure"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=login,Path=Text}" Value="">
+                    <Setter Property="Text" Value="Red"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>-->
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1" Margin="20">
+            <TextBlock>Login</TextBlock>
+
+
+            <TextBox
+                x:Name="login"
+                Margin="0,5"
+                Tag="123"
+                Text="{Binding Path=Login, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <!--<TextBlock Style="{StaticResource login2}" x:Name="hint"></TextBlock>-->
+
+            <TextBlock>Password</TextBlock>
+            <TextBox
+                Height="23"
+                Margin="0,5"
+                Text="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <Button
+                Width="200"
+                Margin="0,5,0,30"
+                HorizontalAlignment="Center"
+                Command="{Binding Auth}"
+                Content="Ок" />
+            <TextBlock>Пользователи в системе</TextBlock>
+            <TextBlock />
+            <UniformGrid Columns="3" Rows="3">
+                <TextBlock Text="login" />
+                <TextBlock Text="password" />
+                <TextBlock Text="role" />
+                <TextBlock Text="{Binding Employees[0].Login}" />
+                <TextBlock Text="123" />
+                <TextBlock Text="{Binding Employees[0].}" />
+                <TextBlock Text="{Binding Employees[1].Login}" />
+                <TextBlock Text="789" />
+                <TextBlock Text="{Binding Employees[1].}" />
+            </UniformGrid>
+        </StackPanel>
+    </Grid>
+</Window>
