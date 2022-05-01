@@ -30,7 +30,7 @@ namespace BankA
 
         public ObservableCollection<Client> ClientsList { get; set; }// список клиентов выбранного департамента
 
-        public Client CurrentClient { get; set; }  // клиент поля которого редактируются или просматриваются
+        public Client? CurrentClient { get; set; }  // клиент поля которого редактируются или просматриваются
         public IEmployee User { get; }
 
         public Client NewClient { get; set; }
@@ -38,7 +38,7 @@ namespace BankA
         private bool _sortFlag = true;
         public string SortDescription { get; set; } = "Сортировка (а-Я)";
         private Client _selectedClient;// выбранный сейчас клиент
-        public Client SelectedClient
+        public Client? SelectedClient
         {
             get => _selectedClient;
             set
@@ -65,7 +65,7 @@ namespace BankA
         }
 
         private Client _lastChanges;
-        public Client LastChanges { get => _lastChanges; set { _lastChanges = value; OnPropertyChanged(); } }          // данные по последним изменениям (из логов)
+        public Client? LastChanges { get => _lastChanges; set { _lastChanges = value; OnPropertyChanged(); } }          // данные по последним изменениям (из логов)
 
         public DataBase DataBase { get; set; }
 

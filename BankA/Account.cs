@@ -16,9 +16,8 @@ namespace BankA
         public enum Status { Actual, Blocked, Closed, Undefined }
         public enum Currency { EUR, RUR, USD, CNY }
 
-        public abstract bool AddMoney();
-        public abstract bool CutMoney();
 
+        
         public Account(string number, Currency cur)
         {
             AccountNumber = number;
@@ -27,6 +26,6 @@ namespace BankA
             OpenDate = DateTime.Now;
             AccountStatus = Status.Actual;
         }
-        
+
     }
 }

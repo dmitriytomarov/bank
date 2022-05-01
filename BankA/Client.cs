@@ -11,7 +11,7 @@ namespace BankA
     {
         #region InotifyProherty
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public void OnPropertyChanged(string propName = "")
         {
@@ -57,11 +57,11 @@ namespace BankA
 
         public Client(string lastName, string firstName, string middleName, string phone, string passport, string id = "")
         {
-            this.LastName = lastName;
-            this.FirstName = firstName;
-            this.MiddleName = middleName;
-            this.Phone = phone;
-            this.Passport = passport;
+            this.lastName =  lastName;
+            this.firstName = firstName;
+            this.middleName = middleName;
+            this.phone = phone;
+            this.passport = passport;
             this.ID = (id == "" ? Guid.NewGuid().ToString() : id);
         }//конструктор
         public Client() : this("Новый клиент", "", "", "", "") { }  //конструктор по умолчанию
