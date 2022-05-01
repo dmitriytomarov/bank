@@ -22,7 +22,7 @@ namespace BankA
 
 
 
-        public string Login
+        public string? Login
         {
             get => _login;
             set
@@ -31,7 +31,7 @@ namespace BankA
                 OnPropertyChanged();
             }
         }
-        public string Password
+        public string? Password
         {
             get => _password;
             set
@@ -42,7 +42,7 @@ namespace BankA
         }
 
 
-        public static string SelectedUser { get; private set; }
+        public static string? SelectedUser { get; private set; }
 
         public Command Auth
         {
@@ -51,7 +51,7 @@ namespace BankA
                                 o => !String.IsNullOrWhiteSpace(Login) && !String.IsNullOrWhiteSpace(Password));
         }
 
-        private void Autorize(string login, string password)
+        private void Autorize(string? login, string? password)
         {
             IEmployee? user = Employees.Find(e => e.Login == login);
 
@@ -91,7 +91,8 @@ namespace BankA
         public LoginViewModel()
         {
             Employees = Consultant.CreateTestUsers();
-
+            Login = "malkov";
+            Password = "789";
         }
     }
 }

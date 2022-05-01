@@ -44,7 +44,7 @@ namespace BankA
         /// </summary>
         /// <param name="password">введенный пароль</param>
         /// <returns></returns>
-        bool CheckPassword(string password);
+        bool CheckPassword(string? password);
         void AddNewClient(DataBase dataBase, Department department, ViewModel vmInstance);
 
     }
