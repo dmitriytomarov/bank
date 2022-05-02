@@ -21,7 +21,7 @@ namespace BankA
         {
             if (currFrom != currTo)
             {
-                MessageBox.Show("Реализация конвертера нужна");
+                MessageBox.Show("Реализация конвертера нужна. Возвращаю 1,0");
                 return 1.0;
             }
             return 1.0;

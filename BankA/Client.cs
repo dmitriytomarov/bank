@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -55,6 +56,15 @@ namespace BankA
             set { passport = value; OnPropertyChanged(); }
         }
 
+        private ObservableCollection<Account> _accounts;
+
+        public ObservableCollection<Account> Accounts
+        {
+            get { return _accounts; }
+            set { _accounts = value; }
+        }
+
+
         public Client(string lastName, string firstName, string middleName, string phone, string passport, string id = "")
         {
             this.lastName =  lastName;
@@ -63,9 +73,11 @@ namespace BankA
             this.phone = phone;
             this.passport = passport;
             this.ID = (id == "" ? Guid.NewGuid().ToString() : id);
+            _accounts = new ObservableCollection<Account>();
         }//конструктор
+
         public Client() : this("Новый клиент", "", "", "", "") { }  //конструктор по умолчанию
-        public Client(string lastName, string firstName, string middleName, string phone, string passport) ://конструктор без ID (нужен)
+        public Client(string lastName, string firstName, string middleName, string phone, string passport) ://конструктор без ID (в общем то он основной. с ID - по итогу не использую. можно схлопнуть)
             this(lastName, firstName, middleName, phone, passport, "")
         { }
     }
