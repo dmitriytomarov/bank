@@ -361,7 +361,7 @@
                                 <!--#region Колонка 2 со счетами клиента -->
                                 <StackPanel Grid.Row="1" Grid.Column="1">
                                     <ListBox Height="195" Margin="15 10"
-                                             ItemsSource="{Binding SelectedClient.Accounts}">
+                                             ItemsSource="{Binding SelectedClient.Accounts}" SelectedItem="{Binding SelectedAccount}">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
@@ -379,7 +379,7 @@
                                     <UniformGrid Columns="2">
                                         
                                     <Button Margin="15 10" Command="{Binding OpenAccount}">Открыть счет</Button>
-                                    <Button Margin="15 10">Пополнить счет</Button>
+                                    <Button Margin="15 10" Command="{Binding AddMoneyCommand}">Пополнить счет</Button>
                                     <Button Margin="15 10">Закрыть счет</Button>
                                     <Button Margin="15 10">Перевести</Button>
                                     </UniformGrid>

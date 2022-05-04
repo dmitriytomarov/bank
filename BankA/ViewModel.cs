@@ -70,6 +70,7 @@ namespace BankA
 
         public DataBase DataBase { get; set; }
 
+        public Account SelectedAccount { get; set; }
 
         public Command Save
         {
@@ -108,7 +109,7 @@ namespace BankA
             }
         }
 
-        public bool[] CheckedCurrencyCheckBoxes { get; set; } = { true, true, true, true };
+        public bool[] CheckedCurrencyCheckBoxes { get; set; } = { true, false, false, false };
         private readonly Account.Currency[] checkedCurrency = { Account.Currency.RUR, Account.Currency.EUR, Account.Currency.USD, Account.Currency.CNY };
         public Command OpenAccountResultYes
         {
@@ -123,6 +124,10 @@ namespace BankA
                         if (!CheckedCurrencyCheckBoxes[i]) continue;
                         SelectedClient?.Accounts.Add(new StandartCurrentAccount(checkedCurrency[i], SelectedClient));
                     }
+                    CheckedCurrencyCheckBoxes[0] = true; // выбор валют счетов по дефолту (только RUR). если убрать то будет запоминаться последний сделанный выбор
+                    CheckedCurrencyCheckBoxes[1] = false;
+                    CheckedCurrencyCheckBoxes[2] = false;
+                    CheckedCurrencyCheckBoxes[3] = false;
                 });
             }
         }
@@ -131,6 +136,24 @@ namespace BankA
             get
             {
                 return new Command(o => ((Window)o).Close());
+            }
+        }
+        public Command AddMoneyCommand
+        {
+            get
+            {
+                return new Command(o =>
+                {
+                    var transaction = new Transaction<Account>(SelectedAccount);
+                    transaction.AddMoney(SelectedAccount, 100000);
+
+                    //var temp = SelectedClient;
+                    //SelectedClient = ClientsList[0];
+                    //SelectedClient = temp;
+
+                },
+                o => SelectedAccount != null
+                );
             }
         }
 
