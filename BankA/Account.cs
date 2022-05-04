@@ -24,10 +24,10 @@ namespace BankA
         }  
 
 
-        protected static int index=0;
+        private static int index=0;
         protected virtual string GetNewAccountNummber(Currency cur)
         {
-            StringBuilder s = new StringBuilder(20);
+            StringBuilder s = new(20);
             s.Append("407")
             .Append("17")
             .Append((int)cur)

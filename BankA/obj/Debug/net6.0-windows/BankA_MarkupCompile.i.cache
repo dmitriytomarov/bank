@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\Admin\source\repos\WpfNet13BankA\BankA\App.xaml
-31505547784
+41844141002
 
-19-99121153
+20-1342067826
 194-1951243044
-Login.xaml;MainWindow.xaml;NewClient.xaml;
+Login.xaml;MainWindow.xaml;NewClient.xaml;OpenAccount.xaml;
 
-False
+True
 

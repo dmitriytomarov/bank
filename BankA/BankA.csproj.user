@@ -13,6 +13,9 @@
     <Compile Update="NewClient.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="OpenAccount.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Login.xaml">
@@ -22,6 +25,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="NewClient.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="OpenAccount.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

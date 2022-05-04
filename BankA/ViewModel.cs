@@ -65,6 +65,7 @@ namespace BankA
         }
 
         private Client _lastChanges;
+
         public Client? LastChanges { get => _lastChanges; set { _lastChanges = value; OnPropertyChanged(); } }          // данные по последним изменениям (из логов)
 
         public DataBase DataBase { get; set; }
@@ -87,6 +88,49 @@ namespace BankA
                     SelectedClient?.Phone != CurrentClient?.Phone ||
                     (SelectedClient?.Passport != CurrentClient?.Passport && CurrentClient?.Passport != "**** ******")
                 );
+            }
+        }
+
+        public Command OpenAccount
+        {
+            get
+            {
+                return new Command(o =>
+                {
+                    OpenAccount w = new();
+                    w.Owner = App.Current.MainWindow;
+                    w.DataContext = this;
+                    w.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    w.ShowDialog();
+                },
+                o => SelectedClient != null
+                );
+            }
+        }
+
+        public bool[] CheckedCurrencyCheckBoxes { get; set; } = { true, true, true, true };
+        private readonly Account.Currency[] checkedCurrency = { Account.Currency.RUR, Account.Currency.EUR, Account.Currency.USD, Account.Currency.CNY };
+        public Command OpenAccountResultYes
+        {
+            get
+            {
+                return new Command(o =>
+                {
+                    Window t = (Window)o;
+                    t.Close();
+                    for (int i = 0; i < CheckedCurrencyCheckBoxes.Length; i++)
+                    {
+                        if (!CheckedCurrencyCheckBoxes[i]) continue;
+                        SelectedClient?.Accounts.Add(new StandartCurrentAccount(checkedCurrency[i], SelectedClient));
+                    }
+                });
+            }
+        }
+        public Command OpenAccountResultNo
+        {
+            get
+            {
+                return new Command(o => ((Window)o).Close());
             }
         }
 
@@ -155,6 +199,7 @@ namespace BankA
             CurrentUser = User?.GetType().Name;
             _newClientVMInstance = new NewClientViewModel(this);
             NewClient = new Client("", "", "", "", "", "");
+
 
         }
     }

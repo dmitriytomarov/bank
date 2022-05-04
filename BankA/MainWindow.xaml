@@ -365,17 +365,20 @@
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding AccountNumber}" Margin="0 0 5 0"/>
-                                                    <TextBlock Text="{Binding AccountStatus}"  Margin="0 0 5 0"/>
+                                                    <TextBlock Text="{Binding AccountNumber}" Margin="0 0 10 0" Width="130"/>
+                                                    <TextBlock Text="{Binding AccountCurrency}"  Margin="0 0 10 0"  Width="25"/>
+                                                    <TextBlock Text="{Binding AccountStatus}"  Margin="0 0 20 0"/>
+                                                    <TextBlock Text="{Binding Money, StringFormat='0.00'}" HorizontalAlignment="Right" Margin="0 0 5 0" Width="60" />
+                                                    <TextBlock Text="{Binding AccountCurrency}" />
                                                     <TextBlock Text=""/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
-                                       
                                     </ListBox>
+                                    
                                     <UniformGrid Columns="2">
                                         
-                                    <Button Margin="15 10">Открыть счет</Button>
+                                    <Button Margin="15 10" Command="{Binding OpenAccount}">Открыть счет</Button>
                                     <Button Margin="15 10">Пополнить счет</Button>
                                     <Button Margin="15 10">Закрыть счет</Button>
                                     <Button Margin="15 10">Перевести</Button>

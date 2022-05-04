@@ -24,3 +24,5 @@ C:\Users\Admin\source\repos\WpfNet13BankA\BankA\obj\Debug\net6.0-windows\BankA.p
 C:\Users\Admin\source\repos\WpfNet13BankA\BankA\obj\Debug\net6.0-windows\BankA.genruntimeconfig.cache
 C:\Users\Admin\source\repos\WpfNet13BankA\BankA\obj\Debug\net6.0-windows\ref\BankA.dll
 C:\Users\Admin\source\repos\WpfNet13BankA\BankA\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Users\Admin\source\repos\WpfNet13BankA\BankA\obj\Debug\net6.0-windows\OpenAccount.g.cs
+C:\Users\Admin\source\repos\WpfNet13BankA\BankA\obj\Debug\net6.0-windows\OpenAccount.baml

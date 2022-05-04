@@ -38,6 +38,8 @@ namespace BankA
                         $"+7 977-{rnd.Next(1000, 9999)}",
                         $"{rnd.Next(1000, 9999)} {rnd.Next(100000, 900000)}"); //паспорт
                     client.Accounts.Add(new StandartCurrentAccount(Account.Currency.RUR, client));
+                    client.Accounts.Add(new StandartCurrentAccount(Account.Currency.EUR, client));
+                    client.Accounts.Add(new StandartCurrentAccount(Account.Currency.USD, client));
                     department.Clients.Add(client);
                 }
 
