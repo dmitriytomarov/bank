@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:BankA"
              StartupUri="Login.xaml">
     <Application.Resources>
-         
+        <local:ConvertBoolVisibilityAddMoneyTextbox x:Key="AddMoneyTextboxConverter"/>
     </Application.Resources>
 </Application>

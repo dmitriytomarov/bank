@@ -65,6 +65,7 @@ namespace BankA
         }
 
         private Client _lastChanges;
+        
 
         public Client? LastChanges { get => _lastChanges; set { _lastChanges = value; OnPropertyChanged(); } }          // данные по последним изменениям (из логов)
 
@@ -138,19 +139,45 @@ namespace BankA
                 return new Command(o => ((Window)o).Close());
             }
         }
-        public Command AddMoneyCommand
+
+        public decimal AddAmount { get; set; } = 0;
+
+        private bool showAddAmountTextboxFlag = false;
+        public bool ShowAddAmountTextboxFlag 
+        {   get => showAddAmountTextboxFlag;
+            set
+            { 
+                showAddAmountTextboxFlag = value;
+                OnPropertyChanged();
+            }
+        }
+        public Command AddMoneyCommandStart
         {
             get
             {
                 return new Command(o =>
                 {
-                    var transaction = new Transaction<Account>(SelectedAccount);
-                    transaction.AddMoney(SelectedAccount, 100000);
+                    AddAmount = 0;//здесь показать окно
+                    ShowAddAmountTextboxFlag = true;
 
                     //var temp = SelectedClient;
                     //SelectedClient = ClientsList[0];
                     //SelectedClient = temp;
 
+                },
+                o => SelectedAccount != null
+                );
+            }
+        }
+        public Command AddMoneyCommandFinish
+        {
+            get
+            {
+                return new Command(o =>
+                {
+                    AddAmount = 0;//здесь показать окно
+                    var transaction = new Transaction<Account>(SelectedAccount);
+                    transaction.AddMoney(SelectedAccount, 100000);
                 },
                 o => SelectedAccount != null
                 );

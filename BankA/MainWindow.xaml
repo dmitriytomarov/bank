@@ -277,7 +277,7 @@
 
                 </Grid>
                     </TabItem>
-                    <TabItem Header="Счета">
+                    <TabItem Header="Счета" IsSelected="True">
                         <Grid ShowGridLines="False">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -379,9 +379,18 @@
                                     <UniformGrid Columns="2">
                                         
                                     <Button Margin="15 10" Command="{Binding OpenAccount}">Открыть счет</Button>
-                                    <Button Margin="15 10" Command="{Binding AddMoneyCommand}">Пополнить счет</Button>
+                                    <Button Margin="15 10" Command="{Binding AddMoneyCommandStart}">Пополнить счет</Button>
                                     <Button Margin="15 10">Закрыть счет</Button>
-                                    <Button Margin="15 10">Перевести</Button>
+                                        <Grid ShowGridLines="True">
+                                            <Button Margin="15 10">Перевести</Button>
+                                            <StackPanel Orientation="Horizontal" Margin="15 10" Visibility="{Binding ShowAddAmountTextboxFlag, Mode=TwoWay, Converter={StaticResource AddMoneyTextboxConverter}}">
+                                                <TextBox x:Name="tblock" Width="100" HorizontalAlignment="Left">sfsdfdsfdsfd</TextBox>
+                                                <TextBox Height="{Binding ElementName=tblock, Path=Height}" 
+                                                         Text="{Binding SelectedAccount.AccountCurrency}" 
+                                                         Width="40"/>
+                                                <Button>Ок</Button>
+                                            </StackPanel>
+                                        </Grid>
                                     </UniformGrid>
                                 </StackPanel>
                                     <!--#endregion-->
