@@ -201,14 +201,23 @@ namespace BankA
             {
                 return new Command(o =>
                 {
-                    AddAmount = "";
                     ShowAddAmountTextboxFlag = false;
-                    MessageBox.Show("jj");
                     var transaction = new Transaction<Account>(SelectedAccount);
                     transaction.AddMoney(SelectedAccount, Convert.ToDecimal(_addAmount));
                 },
                 o => SelectedAccount != null && Decimal.TryParse(_addAmount, out var res)
                 );
+            }
+        }
+        public Command AddMoneyCommandCansel
+        {
+            get
+            {
+                return new Command(o =>
+                {
+                    ShowAddAmountTextboxFlag = false;
+                    _addAmount = "";
+                });
             }
         }
 

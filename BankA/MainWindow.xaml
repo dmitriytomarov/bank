@@ -388,6 +388,9 @@
                                                         Visibility="{Binding ShowAddAmountTextboxFlag, 
                                                         Mode=TwoWay, 
                                                         Converter={StaticResource AddMoneyTextboxVisibilityConverter}}">
+                                                <StackPanel.InputBindings>
+                                                    <KeyBinding Key="Enter" Command="{Binding AddMoneyCommandFinish}"/>
+                                                </StackPanel.InputBindings>
                                                 <TextBox x:Name="tblock" Width="80" 
                                                          HorizontalAlignment="Left" 
                                                          TextAlignment="Right"
@@ -396,7 +399,6 @@
                                                          UpdateSourceTrigger=PropertyChanged}"
                                                          BorderThickness="1 1 0 1"
                                                          />
-                                                <!--https://github.com/xceedsoftware/wpftoolkit/wiki/DoubleUpDown#usage-->
                                                 <TextBox Height="{Binding ElementName=tblock, Path=Height}" 
                                                          Text="{Binding SelectedAccount.AccountCurrency}" 
                                                          Width="30" IsReadOnly="True" 
@@ -406,19 +408,16 @@
                                                              BorderThickness="0 0 0 0" Margin="0 0 0 0"/>
 
                                                     <StackPanel Orientation="Horizontal">
-                                                        <Button Command="{Binding AddMoneyCommandFinish}" Width="26" Height="20" Margin="5 0 0 0">
+                                                        <Button Command="{Binding AddMoneyCommandFinish}" Width="25" Height="20" Margin="5 0 0 0">
                                                             <Grid>
                                                                 <fa:FontAwesome Icon="Solid_Check" Height="15" 
-                                                                            Foreground="Green" 
-                                                                            IsHitTestVisible="False"/>
+                                                                            Foreground="Green" IsHitTestVisible="False"/>
                                                             </Grid>
                                                         </Button>
-
-                                                        <Button Command="{Binding AddMoneyCommandFinish}" Width="26" Height="20" Margin="5 0 0 0">
+                                                        <Button Command="{Binding AddMoneyCommandCansel}" Width="25" Height="20" Margin="5 0 0 0">
                                                             <Grid>
                                                                 <fa:FontAwesome Icon="Solid_Times" Height="15" 
-                                                                            Foreground="red" 
-                                                                            IsHitTestVisible="False"/>
+                                                                            Foreground="red" IsHitTestVisible="False"/>
                                                             </Grid>
                                                         </Button>
                                                     </StackPanel>
@@ -429,14 +428,10 @@
                                 </StackPanel>
                                     <!--#endregion-->
                             </Grid>
-                           
-
                         </Grid>
                     </TabItem>
                 </TabControl>
             </Grid>
-
-              
         </Grid>
 
         <DockPanel

@@ -25,14 +25,14 @@ namespace BankA
 
             if (sLast=="." || sLast ==",")  // если ввели точку но она уже есть
             {
-                if (sTrimmed.Contains('.')) { return sTrimmed; } else { return sTrimmed + "."; }
+                if (sTrimmed.Contains(',')) { return sTrimmed; } else { return sTrimmed + ","; }
             }
 
             char c = System.Convert.ToChar(sLast);
             if (c < 48 || c > 57) { return sTrimmed; }
 
             var a = sTrimmed.IndexOf('.');
-            if (sTrimmed.Contains('.') && (sTrimmed.Length-sTrimmed.IndexOf('.'))>=3) 
+            if (sTrimmed.Contains(',') && (sTrimmed.Length-sTrimmed.IndexOf(','))>=3) 
             {
                 return sTrimmed;
             }
