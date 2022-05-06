@@ -383,11 +383,25 @@
                                     <Button Margin="15 10">Закрыть счет</Button>
                                         <Grid ShowGridLines="True">
                                             <Button Margin="15 10">Перевести</Button>
-                                            <StackPanel Orientation="Horizontal" Margin="15 10" Visibility="{Binding ShowAddAmountTextboxFlag, Mode=TwoWay, Converter={StaticResource AddMoneyTextboxConverter}}">
-                                                <TextBox x:Name="tblock" Width="100" HorizontalAlignment="Left">sfsdfdsfdsfd</TextBox>
+                                            <StackPanel Orientation="Horizontal" Margin="15 10" 
+                                                        Visibility="{Binding ShowAddAmountTextboxFlag, 
+                                                        Mode=TwoWay, 
+                                                        Converter={StaticResource AddMoneyTextboxVisibilityConverter}}">
+                                                <TextBox x:Name="tblock" Width="100" 
+                                                         HorizontalAlignment="Left" 
+                                                         TextAlignment="Right"
+                                                         Text="{Binding AddAmount,
+                                                         Converter={StaticResource AmountConverter}, Mode=TwoWay,
+                                                         UpdateSourceTrigger=PropertyChanged}"
+                                                         BorderThickness="1 1 0 1"
+                                                         />
+                                                <!--https://github.com/xceedsoftware/wpftoolkit/wiki/DoubleUpDown#usage-->
                                                 <TextBox Height="{Binding ElementName=tblock, Path=Height}" 
                                                          Text="{Binding SelectedAccount.AccountCurrency}" 
-                                                         Width="40"/>
+                                                         Width="40" IsReadOnly="True"
+                                                         BorderThickness="0 1 1 1"
+
+                                                         />
                                                 <Button>Ок</Button>
                                             </StackPanel>
                                         </Grid>

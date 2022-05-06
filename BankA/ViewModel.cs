@@ -140,7 +140,25 @@ namespace BankA
             }
         }
 
-        public decimal AddAmount { get; set; } = 0;
+        // public double AddAmount { get; set; }
+
+        private string _addAmount;
+                 
+        public  string AddAmount
+        {
+            get { return _addAmount; }
+            set
+            {
+                //Debug.WriteLine(Convert.ToDouble(value).ToString());
+                if (_addAmount!=value)
+                {
+
+                _addAmount = value;
+                OnPropertyChanged();
+                }
+            }
+        }
+
 
         private bool showAddAmountTextboxFlag = false;
         public bool ShowAddAmountTextboxFlag 
@@ -157,7 +175,7 @@ namespace BankA
             {
                 return new Command(o =>
                 {
-                    AddAmount = 0;//здесь показать окно
+                    AddAmount = "";//здесь показать окно
                     ShowAddAmountTextboxFlag = true;
 
                     //var temp = SelectedClient;
@@ -175,7 +193,7 @@ namespace BankA
             {
                 return new Command(o =>
                 {
-                    AddAmount = 0;//здесь показать окно
+                    AddAmount = "";//здесь показать окно
                     var transaction = new Transaction<Account>(SelectedAccount);
                     transaction.AddMoney(SelectedAccount, 100000);
                 },
