@@ -27,3 +27,6 @@ C:\Users\Admin\source\repos\WpfNet13BankA\BankA\obj\Debug\net6.0-windows\Generat
 C:\Users\Admin\source\repos\WpfNet13BankA\BankA\obj\Debug\net6.0-windows\OpenAccount.g.cs
 C:\Users\Admin\source\repos\WpfNet13BankA\BankA\obj\Debug\net6.0-windows\OpenAccount.baml
 C:\Users\Admin\source\repos\WpfNet13BankA\BankA\obj\Debug\net6.0-windows\App.baml
+C:\Users\Admin\source\repos\WpfNet13BankA\BankA\bin\Debug\net6.0-windows\FontAwesome5.Net.dll
+C:\Users\Admin\source\repos\WpfNet13BankA\BankA\bin\Debug\net6.0-windows\FontAwesome5.dll
+C:\Users\Admin\source\repos\WpfNet13BankA\BankA\obj\Debug\net6.0-windows\BankA.csproj.CopyComplete

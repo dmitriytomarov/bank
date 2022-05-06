@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:BankA"
+    xmlns:fa="http://schemas.fontawesome.com/icons/"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:BankA"
     Title="MainWindow"
@@ -381,13 +382,13 @@
                                     <Button Margin="15 10" Command="{Binding OpenAccount}">Открыть счет</Button>
                                     <Button Margin="15 10" Command="{Binding AddMoneyCommandStart}">Пополнить счет</Button>
                                     <Button Margin="15 10">Закрыть счет</Button>
-                                        <Grid ShowGridLines="True">
+                                        <Grid ShowGridLines="False">
                                             <Button Margin="15 10">Перевести</Button>
                                             <StackPanel Orientation="Horizontal" Margin="15 10" 
                                                         Visibility="{Binding ShowAddAmountTextboxFlag, 
                                                         Mode=TwoWay, 
                                                         Converter={StaticResource AddMoneyTextboxVisibilityConverter}}">
-                                                <TextBox x:Name="tblock" Width="100" 
+                                                <TextBox x:Name="tblock" Width="80" 
                                                          HorizontalAlignment="Left" 
                                                          TextAlignment="Right"
                                                          Text="{Binding AddAmount,
@@ -398,11 +399,30 @@
                                                 <!--https://github.com/xceedsoftware/wpftoolkit/wiki/DoubleUpDown#usage-->
                                                 <TextBox Height="{Binding ElementName=tblock, Path=Height}" 
                                                          Text="{Binding SelectedAccount.AccountCurrency}" 
-                                                         Width="40" IsReadOnly="True"
-                                                         BorderThickness="0 1 1 1"
+                                                         Width="30" IsReadOnly="True" 
+                                                         BorderThickness="0 1 0 1"/>
+                                                <Grid>
+                                                    <TextBox Width="200" Height="22" Background="#FFF9F9F9" HorizontalAlignment="Left" 
+                                                             BorderThickness="0 0 0 0" Margin="0 0 0 0"/>
 
-                                                         />
-                                                <Button Command="{Binding AddMoneyCommandFinish}">Ок</Button>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Button Command="{Binding AddMoneyCommandFinish}" Width="26" Height="20" Margin="5 0 0 0">
+                                                            <Grid>
+                                                                <fa:FontAwesome Icon="Solid_Check" Height="15" 
+                                                                            Foreground="Green" 
+                                                                            IsHitTestVisible="False"/>
+                                                            </Grid>
+                                                        </Button>
+
+                                                        <Button Command="{Binding AddMoneyCommandFinish}" Width="26" Height="20" Margin="5 0 0 0">
+                                                            <Grid>
+                                                                <fa:FontAwesome Icon="Solid_Times" Height="15" 
+                                                                            Foreground="red" 
+                                                                            IsHitTestVisible="False"/>
+                                                            </Grid>
+                                                        </Button>
+                                                    </StackPanel>
+                                                </Grid>
                                             </StackPanel>
                                         </Grid>
                                     </UniformGrid>

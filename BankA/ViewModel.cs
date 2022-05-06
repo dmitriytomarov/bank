@@ -203,6 +203,7 @@ namespace BankA
                 {
                     AddAmount = "";
                     ShowAddAmountTextboxFlag = false;
+                    MessageBox.Show("jj");
                     var transaction = new Transaction<Account>(SelectedAccount);
                     transaction.AddMoney(SelectedAccount, Convert.ToDecimal(_addAmount));
                 },
