@@ -18,9 +18,9 @@ namespace BankA
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string sFull = (string)value;  //полная строка предположим 4 символа
+            string sFull = (string)value;  //полная строка 
             if (String.IsNullOrEmpty(sFull)) return "";
-            string sLast = sFull[^1..]; //последний символ  //https://docs.microsoft.com/ru-ru/dotnet/csharp/whats-new/tutorials/ranges-indexes
+            string sLast = sFull[^1..];   //https://docs.microsoft.com/ru-ru/dotnet/csharp/whats-new/tutorials/ranges-indexes
             var sTrimmed = sFull[0..^1]; //подстрока кроме последнего символа
 
             if (sLast=="." || sLast ==",")  // если ввели точку но она уже есть

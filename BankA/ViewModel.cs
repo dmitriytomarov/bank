@@ -46,6 +46,7 @@ namespace BankA
                 _selectedClient = value;
                 CurrentClient = User?.GetInfo(DataBase, SelectedClient);
                 LastChanges = User?.GetChanges(DataBase, SelectedClient.ID);
+                ShowAddAmountTextboxFlag = false;
                 OnPropertyChanged();
             }
         }
@@ -60,18 +61,29 @@ namespace BankA
                 _selectedDepartment = value;
                 ClientsList = _selectedDepartment.Clients;
                 SelectedClient = _selectedDepartment.Clients.FirstOrDefault<Client>();
+                ShowAddAmountTextboxFlag = false;
                 OnPropertyChanged();
             }
         }
 
         private Client _lastChanges;
-        
+
 
         public Client? LastChanges { get => _lastChanges; set { _lastChanges = value; OnPropertyChanged(); } }          // данные по последним изменениям (из логов)
 
         public DataBase DataBase { get; set; }
 
-        public Account SelectedAccount { get; set; }
+        private Account _selectedAccount;
+        public Account SelectedAccount 
+        { 
+            get => _selectedAccount;
+            set
+            {
+                _selectedAccount = value;
+                ShowAddAmountTextboxFlag = false;
+                OnPropertyChanged();
+            }
+        }  
 
         public Command Save
         {
@@ -143,28 +155,29 @@ namespace BankA
         // public double AddAmount { get; set; }
 
         private string _addAmount;
-                 
-        public  string AddAmount
+
+        public string AddAmount
         {
             get { return _addAmount; }
             set
             {
-                //Debug.WriteLine(Convert.ToDouble(value).ToString());
-                if (_addAmount!=value)
+                if (_addAmount != value)
                 {
-
-                _addAmount = value;
-                OnPropertyChanged();
+                    _addAmount = value;
+                    OnPropertyChanged();
                 }
             }
         }
 
 
         private bool showAddAmountTextboxFlag = false;
-        public bool ShowAddAmountTextboxFlag 
-        {   get => showAddAmountTextboxFlag;
+        
+
+        public bool ShowAddAmountTextboxFlag
+        {
+            get => showAddAmountTextboxFlag;
             set
-            { 
+            {
                 showAddAmountTextboxFlag = value;
                 OnPropertyChanged();
             }
@@ -177,11 +190,6 @@ namespace BankA
                 {
                     AddAmount = "";//здесь показать окно
                     ShowAddAmountTextboxFlag = true;
-
-                    //var temp = SelectedClient;
-                    //SelectedClient = ClientsList[0];
-                    //SelectedClient = temp;
-
                 },
                 o => SelectedAccount != null
                 );
@@ -193,11 +201,12 @@ namespace BankA
             {
                 return new Command(o =>
                 {
-                    AddAmount = "";//здесь показать окно
+                    AddAmount = "";
+                    ShowAddAmountTextboxFlag = false;
                     var transaction = new Transaction<Account>(SelectedAccount);
-                    transaction.AddMoney(SelectedAccount, 100000);
+                    transaction.AddMoney(SelectedAccount, Convert.ToDecimal(_addAmount));
                 },
-                o => SelectedAccount != null
+                o => SelectedAccount != null && Decimal.TryParse(_addAmount, out var res)
                 );
             }
         }
