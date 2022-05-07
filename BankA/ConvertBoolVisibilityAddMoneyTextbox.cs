@@ -17,6 +17,7 @@ namespace BankA
             if ((bool)value)
             {
                 return Visibility.Visible;
+
             }
             else
             {

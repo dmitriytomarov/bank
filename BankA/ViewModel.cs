@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 
 using System.Windows;
+using System.Windows.Input;
 
 namespace BankA
 {
@@ -171,7 +172,7 @@ namespace BankA
 
 
         private bool showAddAmountTextboxFlag = false;
-        
+        //public bool AddMoneyFocused { get; set; } = false;
 
         public bool ShowAddAmountTextboxFlag
         {
@@ -188,10 +189,14 @@ namespace BankA
             {
                 return new Command(o =>
                 {
+                    if (SelectedAccount.AccountStatus == Account.Status.Closed) return;
                     AddAmount = "";//здесь показать окно
                     ShowAddAmountTextboxFlag = true;
+                    //AddMoneyFocused = true;
+                    //App.Current.Windows[0].MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+
                 },
-                o => SelectedAccount != null
+                o => (SelectedAccount != null && SelectedAccount.AccountStatus!=Account.Status.Closed)
                 );
             }
         }

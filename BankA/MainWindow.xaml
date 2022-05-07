@@ -79,8 +79,8 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            
-                    <Grid Grid.Column="2">
+
+            <Grid Grid.Column="2">
                 <TabControl>
                     <TabItem Header="Информация">
                         <Grid ShowGridLines="False">
@@ -222,7 +222,7 @@
                                 Content="Печать логов" />
                                 </StackPanel>
                             </Grid>
-                                <!--<TextBlock
+                            <!--<TextBlock
                                 x:Name="why"
                                 Grid.Row="1"
                                 Width="219"
@@ -231,7 +231,7 @@
                                 VerticalAlignment="Top"
                                 Background="Aqua"
                                 Text="{Binding CurrentClientIndex, UpdateSourceTrigger=PropertyChanged}" />-->
-                                <!--<TextBlock
+                            <!--<TextBlock
                                 Grid.ColumnSpan="2"
                                 Width="243"
                                 Margin="217,50,0,0"
@@ -240,7 +240,7 @@
                                 Text="{Binding ElementName=ClientsList, Path=SelectedIndex}"
                                 TextWrapping="Wrap"
                                 Visibility="Visible" />-->
-                                <!--<TextBlock
+                            <!--<TextBlock
                                 Grid.Row="1"
                                 Grid.ColumnSpan="2"
                                 Width="320"
@@ -259,7 +259,7 @@
                                 VerticalAlignment="Bottom"
                                 Visibility="Collapsed"
                                 Text="{Binding SelectedDepartment.DepartmentID}" />-->
-                                <!--<TextBox
+                            <!--<TextBox
                                 Width="120"
                                 Height="23"
                                 Margin="69,10,0,0"
@@ -276,7 +276,7 @@
                                 Text="{Binding NewClient.FirstName}"
                                 TextWrapping="Wrap" />-->
 
-                </Grid>
+                        </Grid>
                     </TabItem>
                     <TabItem Header="Счета" IsSelected="True">
                         <Grid ShowGridLines="False">
@@ -369,25 +369,29 @@
                                                     <TextBlock Text="{Binding AccountNumber}" Margin="0 0 10 0" Width="130"/>
                                                     <TextBlock Text="{Binding AccountCurrency}"  Margin="0 0 10 0"  Width="25"/>
                                                     <TextBlock Text="{Binding AccountStatus}"  Margin="0 0 20 0"/>
-                                                    <TextBlock Text="{Binding Money, StringFormat='0.00'}" HorizontalAlignment="Right" Margin="0 0 5 0" Width="60" />
+                                                    <TextBlock Text="{Binding Money, StringFormat='0.00'}" TextAlignment="Right" Margin="0 0 10 0" Width="75" />
                                                     <TextBlock Text="{Binding AccountCurrency}" />
                                                     <TextBlock Text=""/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
-                                    
+
                                     <UniformGrid Columns="2">
-                                        
-                                    <Button Margin="15 10" Command="{Binding OpenAccount}">Открыть счет</Button>
-                                    <Button Margin="15 10" Command="{Binding AddMoneyCommandStart}">Пополнить счет</Button>
-                                    <Button Margin="15 10">Закрыть счет</Button>
+
+                                        <Button Margin="15 10" Command="{Binding OpenAccount}">Открыть счет</Button>
+                                        <Button Margin="15 10" Command="{Binding AddMoneyCommandStart}">Пополнить счет</Button>
+                                        <Button Margin="15 10">Закрыть счет</Button>
                                         <Grid ShowGridLines="False">
-                                            <Button Margin="15 10">Перевести</Button>
-                                            <StackPanel Orientation="Horizontal" Margin="15 10" 
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="6*"/>
+                                                <ColumnDefinition Width="29*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Button Margin="15,10,15,10" Grid.ColumnSpan="2">Перевести</Button>
+                                            <StackPanel Orientation="Horizontal" Margin="15,10,15,10" 
                                                         Visibility="{Binding ShowAddAmountTextboxFlag, 
                                                         Mode=TwoWay, 
-                                                        Converter={StaticResource AddMoneyTextboxVisibilityConverter}}">
+                                                        Converter={StaticResource AddMoneyTextboxVisibilityConverter}}" Grid.ColumnSpan="2">
                                                 <StackPanel.InputBindings>
                                                     <KeyBinding Key="Enter" Command="{Binding AddMoneyCommandFinish}"/>
                                                 </StackPanel.InputBindings>
@@ -426,7 +430,7 @@
                                         </Grid>
                                     </UniformGrid>
                                 </StackPanel>
-                                    <!--#endregion-->
+                                <!--#endregion-->
                             </Grid>
                         </Grid>
                     </TabItem>
