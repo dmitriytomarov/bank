@@ -368,9 +368,9 @@
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="{Binding AccountNumber}" Margin="0 0 10 0" Width="130"/>
                                                     <TextBlock Text="{Binding AccountCurrency}"  Margin="0 0 10 0"  Width="25"/>
-                                                    <TextBlock Text="{Binding AccountStatus}"  Margin="0 0 20 0"/>
-                                                    <TextBlock Text="{Binding Money, StringFormat='0.00'}" TextAlignment="Right" Margin="0 0 10 0" Width="75" />
-                                                    <TextBlock Text="{Binding AccountCurrency}" />
+                                                    <TextBlock Text="{Binding AccountStatus}"  Margin="0 0 0 0"  Width="50"/>
+                                                    <TextBlock Text="{Binding Money, StringFormat='0.00'}" TextAlignment="Right" Margin="0 0 10 0" Width="80"/>
+                                                    <TextBlock Text="{Binding AccountCurrency}"/>
                                                     <TextBlock Text=""/>
                                                 </StackPanel>
                                             </DataTemplate>
@@ -381,7 +381,7 @@
 
                                         <Button Margin="15 10" Command="{Binding OpenAccount}">Открыть счет</Button>
                                         <Button Margin="15 10" Command="{Binding AddMoneyCommandStart}">Пополнить счет</Button>
-                                        <Button Margin="15 10">Закрыть счет</Button>
+                                        <Button Margin="15 10" Command="{Binding CloseAccountCommand}">Закрыть счет</Button>
                                         <Grid ShowGridLines="False">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="6*"/>

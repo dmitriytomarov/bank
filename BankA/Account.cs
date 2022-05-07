@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BankA
 {
-    public abstract class Account :  INotifyPropertyChanged
+    public abstract class Account : INotifyPropertyChanged
     {
         #region InotifyProherty
 
@@ -25,7 +25,7 @@ namespace BankA
         public decimal Money
         {
             get => money;
-            set 
+            set
             {
                 money = value;
                 OnPropertyChanged();
@@ -33,7 +33,20 @@ namespace BankA
         }
         public Currency AccountCurrency { get; init; }
         public DateTime OpenDate { get; private set; }
-        public Status AccountStatus { get; private set; }
+
+        private Status _accountStatus;
+        public Status AccountStatus
+        {
+            get => _accountStatus;
+            set
+            {
+            _accountStatus = value; OnPropertyChanged();
+            }
+        }
+
+
+
+
         public enum Status { Reserved, Actual, Blocked, Closed, Undefined }
         public enum Currency { EUR = 978, RUR = 810, USD = 840, CNY = 156 }
 

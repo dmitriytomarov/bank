@@ -75,8 +75,8 @@ namespace BankA
         public DataBase DataBase { get; set; }
 
         private Account _selectedAccount;
-        public Account SelectedAccount 
-        { 
+        public Account SelectedAccount
+        {
             get => _selectedAccount;
             set
             {
@@ -84,7 +84,7 @@ namespace BankA
                 ShowAddAmountTextboxFlag = false;
                 OnPropertyChanged();
             }
-        }  
+        }
 
         public Command Save
         {
@@ -196,7 +196,7 @@ namespace BankA
                     //App.Current.Windows[0].MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
 
                 },
-                o => (SelectedAccount != null && SelectedAccount.AccountStatus!=Account.Status.Closed)
+                o => (SelectedAccount != null && SelectedAccount.AccountStatus != Account.Status.Closed)
                 );
             }
         }
@@ -208,7 +208,7 @@ namespace BankA
                 {
                     ShowAddAmountTextboxFlag = false;
                     var transaction = new Transaction<Account>(SelectedAccount);
-                    transaction.AddMoney(SelectedAccount, Convert.ToDecimal(_addAmount));
+                    transaction.AddMoney(Convert.ToDecimal(_addAmount));
                 },
                 o => SelectedAccount != null && Decimal.TryParse(_addAmount, out var res)
                 );
@@ -223,6 +223,19 @@ namespace BankA
                     ShowAddAmountTextboxFlag = false;
                     _addAmount = "";
                 });
+            }
+        }
+        public Command CloseAccountCommand
+        {
+            get
+            {
+                return new Command(o =>
+                {
+                    var transaction = new Transaction<Account>(SelectedAccount);
+                    transaction.CloseAccount();
+                },
+                o => SelectedAccount != null
+                );
             }
         }
 

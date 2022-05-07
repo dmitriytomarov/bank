@@ -10,21 +10,33 @@ namespace BankA
     internal class Transaction<T>
         where T : Account
     {
-        public  T? Target { get; init; }
+        private T? _account;
+
         public Transaction(T account)
         {
-            Target = account;
+            _account = account;
         }
 
-        public bool AddMoney(T account, decimal amount)
+        public bool AddMoney(/*T account, */ decimal amount)
         {
-            if (account == null) return false;
-            account.Money += amount;
+            if (_account == null) return false;
+            _account.Money += amount;
             return true;
         }
 
         public bool CutMoney(T account, decimal amount) { return true; }
-        public bool CloseAccount(T account) { return true; }
+        public bool CloseAccount()
+        {
+            if (_account == null) return false;
+            if (_account.Money != 0)
+            {
+                MessageBox.Show("Для закрытия счета баланс должен быть = 0");
+                return false;
+            }
+            _account.AccountStatus = Account.Status.Closed;
+            return true;
+        }
+
         public bool TransferFromTo(T sourse, T destination, decimal amount)
         {
             return true;
