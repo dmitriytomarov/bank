@@ -190,10 +190,12 @@ namespace BankA
                 return new Command(o =>
                 {
                     if (SelectedAccount.AccountStatus == Account.Status.Closed) return;
-                    AddAmount = "";//здесь показать окно
+                    AddAmount = "";
                     ShowAddAmountTextboxFlag = true;
+                    ((FrameworkElement)o).Focus();
+                    //MessageBox.Show(el.IsFocused.ToString());
                     //AddMoneyFocused = true;
-                    //App.Current.Windows[0].MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+                    //App.Current.Windows[0].MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
 
                 },
                 o => (SelectedAccount != null && SelectedAccount.AccountStatus != Account.Status.Closed)

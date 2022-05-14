@@ -55,7 +55,7 @@ namespace BankA
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string Login { get; set; }
-        private string _password;
+        private string? _password;
 
         public Consultant(string lastName, string firstName, string login, string password = "11111")
         {

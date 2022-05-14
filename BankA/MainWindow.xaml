@@ -222,60 +222,7 @@
                                 Content="Печать логов" />
                                 </StackPanel>
                             </Grid>
-                            <!--<TextBlock
-                                x:Name="why"
-                                Grid.Row="1"
-                                Width="219"
-                                Margin="70,300,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Background="Aqua"
-                                Text="{Binding CurrentClientIndex, UpdateSourceTrigger=PropertyChanged}" />-->
-                            <!--<TextBlock
-                                Grid.ColumnSpan="2"
-                                Width="243"
-                                Margin="217,50,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Text="{Binding ElementName=ClientsList, Path=SelectedIndex}"
-                                TextWrapping="Wrap"
-                                Visibility="Visible" />-->
-                            <!--<TextBlock
-                                Grid.Row="1"
-                                Grid.ColumnSpan="2"
-                                Width="320"
-                                Height="23"
-                                Margin="114,311,0,-34"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Text="{Binding SelectedClient.ID}"
-                                Visibility="Collapsed"
-                                TextWrapping="Wrap" />
-                                <TextBlock
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Margin="114,330,0,-34"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Bottom"
-                                Visibility="Collapsed"
-                                Text="{Binding SelectedDepartment.DepartmentID}" />-->
-                            <!--<TextBox
-                                Width="120"
-                                Height="23"
-                                Margin="69,10,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Text="{Binding NewClient.LastName}"
-                                TextWrapping="Wrap" />
-                                <TextBox
-                                Width="120"
-                                Height="23"
-                                Margin="204,10,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Text="{Binding NewClient.FirstName}"
-                                TextWrapping="Wrap" />-->
-
+                            
                         </Grid>
                     </TabItem>
                     <TabItem Header="Счета" IsSelected="True">
@@ -338,7 +285,7 @@
                                     VerticalAlignment="Top"
                                     Text="{Binding CurrentClient.Phone, UpdateSourceTrigger=PropertyChanged}"
                                     TextWrapping="Wrap" />
-                                    <TextBox
+                                    <TextBox x:Name="test"
                                     Height="23"
                                     Margin="15,10"
                                     HorizontalAlignment="Stretch"
@@ -380,7 +327,7 @@
                                     <UniformGrid Columns="2">
 
                                         <Button Margin="15 10" Command="{Binding OpenAccount}">Открыть счет</Button>
-                                        <Button Margin="15 10" Command="{Binding AddMoneyCommandStart}">Пополнить счет</Button>
+                                        <Button Margin="15 10" Command="{Binding AddMoneyCommandStart}" CommandParameter="{Binding ElementName=amountTextBox}">Пополнить счет</Button>
                                         <Button Margin="15 10" Command="{Binding CloseAccountCommand}">Закрыть счет</Button>
                                         <Grid ShowGridLines="False">
                                             <Grid.ColumnDefinitions>
@@ -395,15 +342,15 @@
                                                 <StackPanel.InputBindings>
                                                     <KeyBinding Key="Enter" Command="{Binding AddMoneyCommandFinish}"/>
                                                 </StackPanel.InputBindings>
-                                                <TextBox x:Name="tblock" Width="80" 
+                                                <TextBox x:Name="amountTextBox" Width="80" 
                                                          HorizontalAlignment="Left" 
                                                          TextAlignment="Right"
                                                          Text="{Binding AddAmount,
                                                          Converter={StaticResource AmountConverter}, Mode=TwoWay,
                                                          UpdateSourceTrigger=PropertyChanged}"
-                                                         BorderThickness="1 1 0 1"
+                                                         BorderThickness="1 1 0 1" 
                                                          />
-                                                <TextBox Height="{Binding ElementName=tblock, Path=Height}" 
+                                                <TextBox Height="{Binding ElementName=amountTextBox, Path=Height}" 
                                                          Text="{Binding SelectedAccount.AccountCurrency}" 
                                                          Width="30" IsReadOnly="True" 
                                                          BorderThickness="0 1 0 1"/>
