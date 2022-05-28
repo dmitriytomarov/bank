@@ -341,9 +341,12 @@ namespace BankA
         private void OpenTransferTab(object tabs)
         {
             ((TabControl)tabs).SelectedIndex +=1;
-            //((TabControl)tabs).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-            //((TabControl)tabs).SelectedItem
         }
+
+        private Command copyCurrentAccountNubber;
+        public ICommand CopyCurrentAccountNubber => copyCurrentAccountNubber ??= new Command( accNumb=> Clipboard.SetText(accNumb.ToString()) );
+
+        
     }
 
 }

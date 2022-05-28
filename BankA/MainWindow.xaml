@@ -82,6 +82,11 @@
 
             <Grid Grid.Column="2">
                 <TabControl x:Name="tabs">
+                    <TabControl.InputBindings>
+                        <KeyBinding Key="C" Modifiers="Ctrl" 
+                                    Command="{Binding CopyCurrentAccountNubber}"
+                                    CommandParameter="{Binding SelectedAccount.AccountNumber}" />
+                    </TabControl.InputBindings>
                     <TabItem Header="Информация">
                         <Grid ShowGridLines="False">
                             <Grid.ColumnDefinitions>
@@ -226,6 +231,7 @@
                         </Grid>
                     </TabItem>
                     <TabItem Header="Счета" IsSelected="True" >
+                        
                         <Grid ShowGridLines="False">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -383,7 +389,7 @@
                             </Grid>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="Перевод средств" IsSelected="False" Opacity="0">
+                    <TabItem Header="Перевод средств" IsSelected="False" Opacity="1">
                         <Grid ShowGridLines="False">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -415,7 +421,7 @@
                                             FocusManager.FocusedElement="{Binding ElementName=targetAccount}"
                                             >
                                     <TextBlock Margin="15 0">Перевод со счета:</TextBlock>
-                                    <TextBox
+                                    <TextBox IsReadOnly="True"
                                     Height="23"
                                     Margin="15,10"
                                     HorizontalAlignment="Stretch"
