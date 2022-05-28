@@ -86,6 +86,7 @@ namespace BankA
 
         public virtual Client GetInfo(DataBase dataBase, Client client)
         {
+            if (client == null) return null;
             return new Client
                 (
                     client.LastName,
@@ -181,6 +182,7 @@ namespace BankA
 
         public override Client GetInfo(DataBase dataBase, Client client)
         {
+            if (client == null) return null;
             return new Client
                 (
                     client.LastName,

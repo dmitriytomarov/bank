@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BankA;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Diagnostics;
 
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace BankA
 {
@@ -73,6 +75,15 @@ namespace BankA
         public Client? LastChanges { get => _lastChanges; set { _lastChanges = value; OnPropertyChanged(); } }          // данные по последним изменениям (из логов)
 
         public DataBase DataBase { get; set; }
+
+        private Account _targetAccount;
+
+        public Account TargetAccount
+        {
+            get { return _targetAccount; }
+            set { _targetAccount = value; }
+        }
+
 
         private Account _selectedAccount;
         public Account SelectedAccount
@@ -241,6 +252,20 @@ namespace BankA
             }
         }
 
+        public string InfoMessage { get; set; }
+        public Command TransferCommand => new Command(o =>
+        {
+            if (String.IsNullOrEmpty(SelectedAccount?.AccountNumber)) return;
+            if (true /*SelectedAccount.AccountCurrency!=TargetAccount.AccountCurrency*/)
+            {
+                InfoMessage = ($"Валюты счетов не совпадают. Будет проведена конвертация из Х{5} в {2} по курсу {1}");
+            }
+            
+
+        }
+        );
+        
+
         public Command PrintLogs
         {
             get
@@ -308,6 +333,16 @@ namespace BankA
             NewClient = new Client("", "", "", "", "", "");
 
 
+        }
+
+        private Command openTransferTabCommand;
+        public ICommand OpenTransferTabCommand => openTransferTabCommand ??= new Command(OpenTransferTab,(o=> SelectedAccount!=null));
+
+        private void OpenTransferTab(object tabs)
+        {
+            ((TabControl)tabs).SelectedIndex +=1;
+            //((TabControl)tabs).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+            //((TabControl)tabs).SelectedItem
         }
     }
 
