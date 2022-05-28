@@ -97,6 +97,8 @@ namespace BankA
             }
         }
 
+        
+
         private Account _selectedAccount;
         public Account SelectedAccount
         {
@@ -148,6 +150,7 @@ namespace BankA
 
         public bool[] CheckedCurrencyCheckBoxes { get; set; } = { true, false, false, false };
         private readonly Account.Currency[] checkedCurrency = { Account.Currency.RUR, Account.Currency.EUR, Account.Currency.USD, Account.Currency.CNY };
+
         public Command OpenAccountResultYes
         {
             get
@@ -193,7 +196,6 @@ namespace BankA
             }
         }
 
-
         private bool showAddAmountTextboxFlag = false;
 
         public bool ShowAddAmountTextboxFlag
@@ -205,6 +207,7 @@ namespace BankA
                 OnPropertyChanged();
             }
         }
+
         public Command AddMoneyCommandStart
         {
             get
@@ -263,17 +266,54 @@ namespace BankA
             }
         }
 
-        public string InfoMessage { get; set; }
+
+    
+
+        private string _infoMessage;
+
+        public string InfoMessage
+        {
+            get { return _infoMessage; }
+            set { _infoMessage = value; OnPropertyChanged(); }
+        }
+
+        private string _totalAmountMessage;
+
+        public string TotalAmountMessage
+        {
+            get { return _totalAmountMessage; }
+            set { _totalAmountMessage = value; OnPropertyChanged(); }
+        }
+
+
+        private string _transferAmount;
+
+        public string TransferAmount
+        {
+            get { return _transferAmount; }
+            set { _transferAmount = value; 
+                CreateTotalAmountMessage(); 
+            }
+        }
+
+        private void CreateTotalAmountMessage()
+        {
+            TotalAmountMessage = "";
+            if (!String.IsNullOrEmpty(InfoMessage))
+            {
+                TotalAmountMessage = $"Итоговая сумма перевода:  {Convert.ToDecimal(TransferAmount) * 50}";
+            }
+        }
 
         private void VerifyAccountNumber()
         {
-
+            InfoMessage = "";
             if (TargetAccountNumber.Length > 20) { InfoMessage = "Ошибочный номер счета"; return; }
             if (TargetAccountNumber.Length < 20) { InfoMessage = ""; return; }
             if (TargetAccountNumber==SelectedAccount.AccountNumber) { InfoMessage = "Номера счетов источника и получателя одинаковы"; return; }
 
             bool flag = false;
-            Client TargetClient = new();
+            //Client TargetClient = new();
             foreach (var dep in DataBase.Departments)
             {
                 foreach (var client in dep.Clients)
@@ -292,9 +332,13 @@ namespace BankA
                 }
                 if (flag) break;
             }
-            
-            InfoMessage = flag.ToString();
-            //InfoMessage = "";
+            if (!flag) { InfoMessage = "Номер счета не найден."; return; }
+            if (TargetAccount.AccountCurrency != SelectedAccount.AccountCurrency)
+            {
+                InfoMessage = String.Format("Валюты счетов не совпадают. Будет проведена конвертация из {0} в {1} по курсу {2}.",
+                    SelectedAccount.AccountCurrency, TargetAccount.AccountCurrency, 50
+                    );
+            }
             return;
         }
 
@@ -303,7 +347,6 @@ namespace BankA
             if (String.IsNullOrEmpty(SelectedAccount?.AccountNumber)) return;
             if (true /*SelectedAccount.AccountCurrency!=TargetAccount.AccountCurrency*/)
             {
-                //InfoMessage = ($"Валюты счетов не совпадают. Будет проведена конвертация из Х{5} в {2} по курсу {1}");
             }
 
 
@@ -386,6 +429,9 @@ namespace BankA
         private void OpenTransferTab(object tabs)
         {
             ((TabControl)tabs).SelectedIndex += 1;
+            TargetAccountNumber = "";
+            TransferAmount = "10000";
+
         }
 
         private Command copyCurrentAccountNubber;
