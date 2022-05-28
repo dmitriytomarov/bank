@@ -48,7 +48,7 @@ namespace BankA
             {
                 _selectedClient = value;
                 CurrentClient = User?.GetInfo(DataBase, SelectedClient);
-                LastChanges = User?.GetChanges(DataBase, SelectedClient.ID);
+                LastChanges = User?.GetChanges(DataBase, SelectedClient?.ID);
                 ShowAddAmountTextboxFlag = false;
                 OnPropertyChanged();
             }
@@ -84,6 +84,18 @@ namespace BankA
             set { _targetAccount = value; }
         }
 
+        private string _targetAccountNumber;
+        public string TargetAccountNumber 
+        { 
+            get => _targetAccountNumber;
+            set
+            { 
+                _targetAccountNumber = value;
+                VerifyAccountNumber();
+                OnPropertyChanged();
+
+            }
+        }
 
         private Account _selectedAccount;
         public Account SelectedAccount
@@ -183,7 +195,6 @@ namespace BankA
 
 
         private bool showAddAmountTextboxFlag = false;
-        //public bool AddMoneyFocused { get; set; } = false;
 
         public bool ShowAddAmountTextboxFlag
         {
@@ -253,18 +264,52 @@ namespace BankA
         }
 
         public string InfoMessage { get; set; }
+
+        private void VerifyAccountNumber()
+        {
+
+            if (TargetAccountNumber.Length > 20) { InfoMessage = "Ошибочный номер счета"; return; }
+            if (TargetAccountNumber.Length < 20) { InfoMessage = ""; return; }
+            if (TargetAccountNumber==SelectedAccount.AccountNumber) { InfoMessage = "Номера счетов источника и получателя одинаковы"; return; }
+
+            bool flag = false;
+            Client TargetClient = new();
+            foreach (var dep in DataBase.Departments)
+            {
+                foreach (var client in dep.Clients)
+                {
+                    foreach (var account in client.Accounts)
+                    {
+                        if (account.AccountNumber == TargetAccountNumber)
+                        {
+                            flag = true;
+                            //TargetClient = client;
+                            TargetAccount = account;
+                            break;
+                        }
+                    }
+                    if (flag) break;
+                }
+                if (flag) break;
+            }
+            
+            InfoMessage = flag.ToString();
+            //InfoMessage = "";
+            return;
+        }
+
         public Command TransferCommand => new Command(o =>
         {
             if (String.IsNullOrEmpty(SelectedAccount?.AccountNumber)) return;
             if (true /*SelectedAccount.AccountCurrency!=TargetAccount.AccountCurrency*/)
             {
-                InfoMessage = ($"Валюты счетов не совпадают. Будет проведена конвертация из Х{5} в {2} по курсу {1}");
+                //InfoMessage = ($"Валюты счетов не совпадают. Будет проведена конвертация из Х{5} в {2} по курсу {1}");
             }
-            
+
 
         }
         );
-        
+
 
         public Command PrintLogs
         {
@@ -336,17 +381,19 @@ namespace BankA
         }
 
         private Command openTransferTabCommand;
-        public ICommand OpenTransferTabCommand => openTransferTabCommand ??= new Command(OpenTransferTab,(o=> SelectedAccount!=null));
+        public ICommand OpenTransferTabCommand => openTransferTabCommand ??= new Command(OpenTransferTab, (o => SelectedAccount != null));
 
         private void OpenTransferTab(object tabs)
         {
-            ((TabControl)tabs).SelectedIndex +=1;
+            ((TabControl)tabs).SelectedIndex += 1;
         }
 
         private Command copyCurrentAccountNubber;
-        public ICommand CopyCurrentAccountNubber => copyCurrentAccountNubber ??= new Command( accNumb=> Clipboard.SetText(accNumb.ToString()) );
-
         
+
+        public ICommand CopyCurrentAccountNubber => copyCurrentAccountNubber ??= new Command(accNumb => Clipboard.SetText(accNumb.ToString()));
+
+
     }
 
 }

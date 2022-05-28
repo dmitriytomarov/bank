@@ -10,12 +10,12 @@ namespace BankA
     /// <summary>
     /// Конвертер валют. Возвращает double коэффициент на который надо умножить чтобы получить сумму во второй валюте из суммы первой
     /// </summary>
-    internal interface IConverter
+    internal interface ICurrencyConverter
     {
         public double Convert(Account.Currency currFrom, Account.Currency currTo);
     }
 
-    public class Converter : IConverter
+    public class Converter : ICurrencyConverter
     {
         public double Convert(Account.Currency currFrom, Account.Currency currTo)
         {
