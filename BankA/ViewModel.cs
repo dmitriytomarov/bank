@@ -49,6 +49,10 @@ namespace BankA
                 CurrentClient = User?.GetInfo(DataBase, SelectedClient);
                 LastChanges = User?.GetChanges(DataBase, SelectedClient?.ID);
                 ShowAddAmountTextboxFlag = false;
+                //TargetAccountNumber = _selectedClient?.Accounts[0].AccountNumber; //здесь был по дефолту первый счет
+                TargetAccountNumber = (_selectedClient?.Accounts.ToList().Find(e => e.AccountCurrency.ToString() == SourceAccountCurrency))?.AccountNumber.ToString() ?? "";
+                //здесь ищем счет с валютой соответствующий валюте источника и предлагаем по дефолту его
+
                 OnPropertyChanged();
             }
         }
@@ -85,11 +89,17 @@ namespace BankA
 
 
         private string _sourceAccountNumber;
-
         public string SourceAccountNumber
         {
             get { return _sourceAccountNumber; }
             set { _sourceAccountNumber = value; }
+        }
+
+        private string _sourceAccountCurrency;  //Source номер и валюта - фикс копии изначально выбраного счета. потом выбирается счет назначения, чтоб не сбрасывались
+        public string SourceAccountCurrency
+        {
+            get { return _sourceAccountCurrency; }
+            set { _sourceAccountCurrency = value; }
         }
 
 
@@ -324,8 +334,8 @@ namespace BankA
         private void VerifyAccountNumber()
         {
             InfoMessage = "";
-            if (TargetAccountNumber.Length > 20) { InfoMessage = "Ошибочный номер счета"; return; }
-            if (TargetAccountNumber.Length < 20) { InfoMessage = ""; return; }
+            if (TargetAccountNumber?.Length > 20) { InfoMessage = "Ошибочный номер счета"; return; }
+            if (TargetAccountNumber?.Length < 20) { InfoMessage = ""; return; }
             if (TargetAccountNumber==SourceAccountNumber) { InfoMessage = "Номера счетов источника и получателя одинаковы"; return; }
 
             bool flag = false;
@@ -349,10 +359,10 @@ namespace BankA
                 if (flag) break;
             }
             if (!flag) { InfoMessage = "Номер счета не найден."; return; }
-            if (TargetAccount.AccountCurrency != SelectedAccount.AccountCurrency)
+            if (TargetAccount?.AccountCurrency.ToString() != SourceAccountCurrency)
             {
                 InfoMessage = String.Format("Валюты счетов не совпадают. Будет проведена конвертация из {0} в {1} по курсу {2}.",
-                    SelectedAccount.AccountCurrency, TargetAccount.AccountCurrency, 50
+                    SourceAccountCurrency, TargetAccount?.AccountCurrency, 50
                     );
             }
             return;
@@ -458,6 +468,7 @@ namespace BankA
             
             ((TabControl)tabs).SelectedIndex += 1;  //переключение на вкладку перевода средств
             SourceAccountNumber = SelectedAccount.AccountNumber;
+            SourceAccountCurrency = SelectedAccount.AccountCurrency.ToString();
             UpdateBottomInfoMessage("CTRL + V - вставить номер счета из буфера");
             TargetAccountNumber = "";
             TransferAmount = "10000";
@@ -470,9 +481,7 @@ namespace BankA
         }
 
         private Command copyCurrentAccountNubber;
-        
-
-        public ICommand CopyCurrentAccountNubber => copyCurrentAccountNubber ??= new Command(accNumb => Clipboard.SetText(accNumb.ToString()));
+        public ICommand CopyCurrentAccountNubber => copyCurrentAccountNubber ??= new Command(accNumb => Clipboard.SetText(accNumb?.ToString()), accNumb => accNumb!=null);
 
 
     }

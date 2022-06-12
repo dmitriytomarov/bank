@@ -439,8 +439,8 @@
                                     TextWrapping="Wrap" />
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="auto">
-                                        <TextBlock Margin="15 0" Text="Количество, "/>
-                                        <TextBlock Margin="15 0" Text="{Binding SelectedAccount.AccountCurrency}"></TextBlock>
+                                        <TextBlock Margin="15 0 0 0" Text="Количество, "/>
+                                        <TextBlock Margin="0 0" Text="{Binding SourceAccountCurrency}"></TextBlock>
                                     </StackPanel>
                                     <TextBox x:Name="transferAmount"
                                     Height="23"
@@ -463,7 +463,15 @@
                                     CommandParameter="{Binding ElementName=tabs}"
                                     Content="Отмена" />
                                     </UniformGrid>
-
+                                    <ComboBox ItemsSource="{Binding SelectedClient.Accounts}" 
+                                              Text="{Binding TargetAccount, Mode=OneWay}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding AccountNumber}"></TextBlock>
+                                            </DataTemplate>    
+                                        </ComboBox.ItemTemplate>
+                                        
+                                    </ComboBox>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1">
                                     <TextBlock Text="{Binding InfoMessage}" TextWrapping="Wrap" Foreground="red"
