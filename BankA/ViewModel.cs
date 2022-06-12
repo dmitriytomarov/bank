@@ -15,7 +15,7 @@ namespace BankA
 {
     public class ViewModel : INotifyPropertyChanged
     {
-        #region InotifyProherty
+        #region InotifyPropherty
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -117,7 +117,8 @@ namespace BankA
             {
                 _selectedAccount = value;
                 ShowAddAmountTextboxFlag = false;
-                if (_selectedAccount != null) { BottomInfoMessage = "CTRL + C - скопировать номер выделенного счета"; } 
+                if (_selectedAccount == null) { UpdateBottomInfoMessage(""); }
+                else { UpdateBottomInfoMessage("CTRL + C - скопировать номер счета в буфер");}
                 OnPropertyChanged();
             }
         }
@@ -368,6 +369,14 @@ namespace BankA
         }
         );
 
+        public Command TransferCommandCansel => new Command(tab =>
+        {
+            ((TabControl)tab).SelectedIndex -= 1;
+            SourceAccountNumber = "";
+            UpdateBottomInfoMessage("");
+        }
+     );
+
 
         public Command PrintLogs
         {
@@ -449,10 +458,15 @@ namespace BankA
             
             ((TabControl)tabs).SelectedIndex += 1;  //переключение на вкладку перевода средств
             SourceAccountNumber = SelectedAccount.AccountNumber;
-            BottomInfoMessage = "CTRL + V - вставить номер счета из буфера";
+            UpdateBottomInfoMessage("CTRL + V - вставить номер счета из буфера");
             TargetAccountNumber = "";
             TransferAmount = "10000";
 
+        }
+
+        private void UpdateBottomInfoMessage(string message = "")
+        {
+            BottomInfoMessage = message;
         }
 
         private Command copyCurrentAccountNubber;

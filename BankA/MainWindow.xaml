@@ -459,7 +459,8 @@
                                     Content="Перевести" />
                                         <Button
                                     Margin="10 10"
-                                    Command="{Binding Save}"
+                                    Command="{Binding TransferCommandCansel}"
+                                    CommandParameter="{Binding ElementName=tabs}"
                                     Content="Отмена" />
                                     </UniformGrid>
 
