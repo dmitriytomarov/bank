@@ -506,7 +506,7 @@
             <TextBlock
                 Margin="0,0,10,0"
                 HorizontalAlignment="Right"
-                Text="{Binding SelectedDepartment.Clients.Count, StringFormat='Клиентов в департаменте: {0}'}" />
+                Text="{Binding SelectedDepartment.Clients.Count, StringFormat='Клиентов в группе: {0}'}" />
         </DockPanel>
 
 

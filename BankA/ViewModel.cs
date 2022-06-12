@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Diagnostics;
-
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
@@ -413,7 +412,8 @@ namespace BankA
         public ViewModel() { }
         public ViewModel(IEmployee user)
         {
-            DataBase = new DataBase();
+            DataBase = new DataBase(new TestData());
+
             SelectedDepartment = DataBase.Departments[0];
             this.User = user;
             CurrentUser = User?.GetType().Name;
