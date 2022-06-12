@@ -52,6 +52,7 @@ namespace BankA
                 //TargetAccountNumber = _selectedClient?.Accounts[0].AccountNumber; //здесь был по дефолту первый счет
                 TargetAccountNumber = (_selectedClient?.Accounts.ToList().Find(e => e.AccountCurrency.ToString() == SourceAccountCurrency))?.AccountNumber.ToString() ?? "";
                 //здесь ищем счет с валютой соответствующий валюте источника и предлагаем по дефолту его
+                VerifyAccountNumber();
 
                 OnPropertyChanged();
             }
@@ -370,7 +371,7 @@ namespace BankA
 
         public Command TransferCommand => new Command(o =>
         {
-            if (String.IsNullOrEmpty(SelectedAccount?.AccountNumber)) return; /// ВОПРОС5555555
+            if (String.IsNullOrEmpty(SelectedAccount?.AccountNumber)) return; /// ВОПРОС возм убрать5555555
             if (true /*SelectedAccount.AccountCurrency!=TargetAccount.AccountCurrency*/)
             {
             }

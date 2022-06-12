@@ -463,8 +463,8 @@
                                     CommandParameter="{Binding ElementName=tabs}"
                                     Content="Отмена" />
                                     </UniformGrid>
-                                    <ComboBox ItemsSource="{Binding SelectedClient.Accounts}" 
-                                              Text="{Binding TargetAccount, Mode=OneWay}">
+                                    <ComboBox ItemsSource="{Binding Path=SelectedClient.Accounts}" 
+                                              SelectedItem="{Binding Path=TargetAccount}">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding AccountNumber}"></TextBlock>
