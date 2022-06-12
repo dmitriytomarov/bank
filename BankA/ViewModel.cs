@@ -83,6 +83,17 @@ namespace BankA
             set { _targetAccount = value; }
         }
 
+
+        private string _sourceAccountNumber;
+
+        public string SourceAccountNumber
+        {
+            get { return _sourceAccountNumber; }
+            set { _sourceAccountNumber = value; }
+        }
+
+
+
         private string _targetAccountNumber;
         public string TargetAccountNumber 
         { 
@@ -106,6 +117,7 @@ namespace BankA
             {
                 _selectedAccount = value;
                 ShowAddAmountTextboxFlag = false;
+                if (_selectedAccount != null) { BottomInfoMessage = "CTRL + C - скопировать номер выделенного счета"; } 
                 OnPropertyChanged();
             }
         }
@@ -265,11 +277,15 @@ namespace BankA
             }
         }
 
+        private string _bottomInfoMessage;
+        public string BottomInfoMessage
+        {
+            get { return _bottomInfoMessage; }
+            set { _bottomInfoMessage = value; OnPropertyChanged(); }
+        }
 
-    
 
         private string _infoMessage;
-
         public string InfoMessage
         {
             get { return _infoMessage; }
@@ -309,7 +325,7 @@ namespace BankA
             InfoMessage = "";
             if (TargetAccountNumber.Length > 20) { InfoMessage = "Ошибочный номер счета"; return; }
             if (TargetAccountNumber.Length < 20) { InfoMessage = ""; return; }
-            if (TargetAccountNumber==SelectedAccount.AccountNumber) { InfoMessage = "Номера счетов источника и получателя одинаковы"; return; }
+            if (TargetAccountNumber==SourceAccountNumber) { InfoMessage = "Номера счетов источника и получателя одинаковы"; return; }
 
             bool flag = false;
             //Client TargetClient = new();
@@ -343,7 +359,7 @@ namespace BankA
 
         public Command TransferCommand => new Command(o =>
         {
-            if (String.IsNullOrEmpty(SelectedAccount?.AccountNumber)) return;
+            if (String.IsNullOrEmpty(SelectedAccount?.AccountNumber)) return; /// ВОПРОС5555555
             if (true /*SelectedAccount.AccountCurrency!=TargetAccount.AccountCurrency*/)
             {
             }
@@ -426,9 +442,14 @@ namespace BankA
         private Command openTransferTabCommand;
         public ICommand OpenTransferTabCommand => openTransferTabCommand ??= new Command(OpenTransferTab, (o => SelectedAccount != null));
 
+        
+
         private void OpenTransferTab(object tabs)
         {
-            ((TabControl)tabs).SelectedIndex += 1;
+            
+            ((TabControl)tabs).SelectedIndex += 1;  //переключение на вкладку перевода средств
+            SourceAccountNumber = SelectedAccount.AccountNumber;
+            BottomInfoMessage = "CTRL + V - вставить номер счета из буфера";
             TargetAccountNumber = "";
             TransferAmount = "10000";
 
