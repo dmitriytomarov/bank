@@ -103,7 +103,17 @@ namespace BankA
             set { _sourceAccountCurrency = value; }
         }
 
+        
+        private string _sourceAccountFormatString;  // в одной строке номер счета и валюта счета
+        public string SourceAccountFormatString
+        {
+            get { return _sourceAccountFormatString; }
+            set { _sourceAccountFormatString = value;
+                OnPropertyChanged("SourceAccountFormatString");
+            }
+        }
 
+        private string? _changeBuffer;
 
         private string _targetAccountNumber;
         public string TargetAccountNumber 
@@ -473,6 +483,8 @@ namespace BankA
             ((TabControl)tabs).SelectedIndex += 1;  //переключение на вкладку перевода средств
             SourceAccountNumber = SelectedAccount.AccountNumber;
             SourceAccountCurrency = SelectedAccount.AccountCurrency.ToString();
+            SourceAccountFormatString = $"{SourceAccountNumber}   [{SourceAccountCurrency}]";
+
             UpdateBottomInfoMessage("Выбрать клиента в списке или CTRL + V - вставить номер счета из буфера");
             TargetAccountNumber = "";
             TransferAmount = "10000";
@@ -485,18 +497,25 @@ namespace BankA
         }
 
         private Command copyCurrentAccountNumber;
-        public ICommand CopyCurrentAccountNumber => copyCurrentAccountNumber ??= new Command(accNumb => Clipboard.SetText(accNumb?.ToString()), accNumb => accNumb!=null);
+        //public ICommand CopyCurrentAccountNumber => copyCurrentAccountNumber ??= new Command(accNumb => Clipboard.SetText(accNumb?.ToString()), accNumb => accNumb!=null);
+        public ICommand CopyCurrentAccountNumber => copyCurrentAccountNumber ??= new Command(accNumb => _changeBuffer=accNumb?.ToString(), accNumb => accNumb!=null);
 
         public ICommand InsertAccountNumberCommand => new Command(targetAccComboBox =>
                                                                     {
-                                                                        TargetAccountNumber = Clipboard.GetText();  // берем номер счета из буфера обмена и ищем по нему Account
-                                                                        VerifyAccountNumber();
-                                                                        //SelectedClient = _selectedClient;
-                                                                        //((ComboBox)targetAccComboBox).SelectedItem = TargetAccount;
-                                                                        //OnPropertyChanged();
-                                                                        //MessageBox.Show(TargetAccount?.AccountNumber);
+                                                                        //if (!String.IsNullOrEmpty(Clipboard.GetText()))
+                                                                        //{
+                                                                        //    TargetAccountNumber = Clipboard.GetText();  // берем номер счета из буфера обмена и ищем по нему Account
+                                                                        //    VerifyAccountNumber();
+                                                                        //}  // со старндартным буфером имеются странные артефакты и побочки... использую свою переменную 
+
+                                                                        if (!String.IsNullOrEmpty(_changeBuffer))
+                                                                        {
+                                                                            TargetAccountNumber = _changeBuffer;  // берем номер счета из буфера обмена и ищем по нему Account
+                                                                            VerifyAccountNumber();
+                                                                        }
+
                                                                     },
-                                                                    o=> !String.IsNullOrEmpty(Clipboard.GetText())
+                                                                    o=> !String.IsNullOrEmpty(_changeBuffer)
                                                                     );
 
     }
