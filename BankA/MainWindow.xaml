@@ -84,7 +84,7 @@
                 <TabControl x:Name="tabs">
                     <TabControl.InputBindings>
                         <KeyBinding Key="C" Modifiers="Ctrl" 
-                                    Command="{Binding CopyCurrentAccountNubber}"
+                                    Command="{Binding CopyCurrentAccountNumber}"
                                     CommandParameter="{Binding SelectedAccount.AccountNumber}" />
                     </TabControl.InputBindings>
                     <TabItem Header="Информация">
@@ -417,9 +417,19 @@
                                 </Grid.ColumnDefinitions>
 
                                 <!--#region Колонка 1 с данными клиента  -->
-                                <StackPanel FocusManager.FocusedElement="{Binding ElementName=targetAccount}"
-                                            >
-                                    <TextBlock Margin="15 0">Перевод со счета:</TextBlock>
+                                <StackPanel FocusManager.FocusedElement="{Binding ElementName=targetAccount}">
+                                    <StackPanel.InputBindings>
+                                        <KeyBinding Key="V" Modifiers="Ctrl" 
+                                                    Command="{Binding InsertAccountNumberCommand}"
+                                                    CommandParameter="{Binding ElementName=targetAccount}"
+                                                    />
+                                    </StackPanel.InputBindings>
+                                    <UniformGrid Rows="1" Columns="2">
+                                        <TextBlock Margin="15 0">Перевод со счета:</TextBlock>
+                                        <TextBlock Margin="15 0" HorizontalAlignment="Right"
+                                                   Text="{Binding SourceAccountCurrency}"
+                                                   />
+                                    </UniformGrid>
                                     <TextBox IsReadOnly="True"
                                     Height="23"
                                     Margin="15,10"
@@ -428,8 +438,27 @@
                                     Style="{StaticResource RoleTrigger}"
                                     Text="{Binding SourceAccountNumber}" 
                                     TextWrapping="Wrap" />
-                                    <TextBlock Margin="15 0">На счет:</TextBlock>
-                                    <TextBox x:Name="targetAccount"
+                                    <UniformGrid Rows="1" Columns="2">
+                                        <TextBlock Margin="15 0">На счет:</TextBlock>
+                                        <TextBlock Margin="15 0" HorizontalAlignment="Right"
+                                                   Text="{Binding TargetAccount.AccountCurrency}"/>
+                                    </UniformGrid>
+                                    <ComboBox  x:Name="targetAccount"
+                                               Margin="15,10"
+                                              ItemsSource="{Binding Path=SelectedClient.Accounts}" 
+                                              SelectedItem="{Binding Path=TargetAccount, Mode=TwoWay}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding AccountNumber}"></TextBlock>
+                                                    <TextBlock Text="{Binding AccountCurrency, StringFormat='{}   [{0}]'}"></TextBlock>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+
+                                    </ComboBox>
+
+                                    <TextBox
                                     Height="23"
                                     Margin="15,10"
                                     HorizontalAlignment="Stretch"
@@ -463,15 +492,7 @@
                                     CommandParameter="{Binding ElementName=tabs}"
                                     Content="Отмена" />
                                     </UniformGrid>
-                                    <ComboBox ItemsSource="{Binding Path=SelectedClient.Accounts}" 
-                                              SelectedItem="{Binding Path=TargetAccount}">
-                                        <ComboBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding AccountNumber}"></TextBlock>
-                                            </DataTemplate>    
-                                        </ComboBox.ItemTemplate>
-                                        
-                                    </ComboBox>
+                                    
                                 </StackPanel>
                                 <StackPanel Grid.Column="1">
                                     <TextBlock Text="{Binding InfoMessage}" TextWrapping="Wrap" Foreground="red"

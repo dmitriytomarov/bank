@@ -350,8 +350,11 @@ namespace BankA
                         if (account.AccountNumber == TargetAccountNumber)
                         {
                             flag = true;
-                            //TargetClient = client;
                             TargetAccount = account;
+                            _selectedDepartment = dep;
+                            SelectedDepartment = _selectedDepartment;      //SelectedDepartment = dep; //так вместо пред двух строк - не годится. переполняется стек
+                            _selectedClient = client;
+                            OnPropertyChanged();
                             break;
                         }
                     }
@@ -470,7 +473,7 @@ namespace BankA
             ((TabControl)tabs).SelectedIndex += 1;  //переключение на вкладку перевода средств
             SourceAccountNumber = SelectedAccount.AccountNumber;
             SourceAccountCurrency = SelectedAccount.AccountCurrency.ToString();
-            UpdateBottomInfoMessage("CTRL + V - вставить номер счета из буфера");
+            UpdateBottomInfoMessage("Выбрать клиента в списке или CTRL + V - вставить номер счета из буфера");
             TargetAccountNumber = "";
             TransferAmount = "10000";
 
@@ -481,9 +484,20 @@ namespace BankA
             BottomInfoMessage = message;
         }
 
-        private Command copyCurrentAccountNubber;
-        public ICommand CopyCurrentAccountNubber => copyCurrentAccountNubber ??= new Command(accNumb => Clipboard.SetText(accNumb?.ToString()), accNumb => accNumb!=null);
+        private Command copyCurrentAccountNumber;
+        public ICommand CopyCurrentAccountNumber => copyCurrentAccountNumber ??= new Command(accNumb => Clipboard.SetText(accNumb?.ToString()), accNumb => accNumb!=null);
 
+        public ICommand InsertAccountNumberCommand => new Command(targetAccComboBox =>
+                                                                    {
+                                                                        TargetAccountNumber = Clipboard.GetText();  // берем номер счета из буфера обмена и ищем по нему Account
+                                                                        VerifyAccountNumber();
+                                                                        //SelectedClient = _selectedClient;
+                                                                        //((ComboBox)targetAccComboBox).SelectedItem = TargetAccount;
+                                                                        //OnPropertyChanged();
+                                                                        //MessageBox.Show(TargetAccount?.AccountNumber);
+                                                                    },
+                                                                    o=> !String.IsNullOrEmpty(Clipboard.GetText())
+                                                                    );
 
     }
 
