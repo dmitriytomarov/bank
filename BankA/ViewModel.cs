@@ -103,7 +103,12 @@ namespace BankA
             set { _sourceAccountCurrency = value; }
         }
 
-
+        private string _sourceAccountFormatString;
+        public string SourceAccountFormatString
+        {
+            get { return _sourceAccountFormatString; }
+            set { _sourceAccountFormatString = value; }
+        }
 
         private string _targetAccountNumber;
         public string TargetAccountNumber 
@@ -470,6 +475,7 @@ namespace BankA
             ((TabControl)tabs).SelectedIndex += 1;  //переключение на вкладку перевода средств
             SourceAccountNumber = SelectedAccount.AccountNumber;
             SourceAccountCurrency = SelectedAccount.AccountCurrency.ToString();
+            SourceAccountFormatString = $"{SourceAccountNumber}   [{SourceAccountCurrency}]";
             UpdateBottomInfoMessage("CTRL + V - вставить номер счета из буфера");
             TargetAccountNumber = "";
             TransferAmount = "10000";
