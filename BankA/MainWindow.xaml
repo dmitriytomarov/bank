@@ -458,14 +458,14 @@
 
                                     </ComboBox>
 
-                                    <TextBox
+                                    <!--<TextBox
                                     Height="23"
                                     Margin="15,10"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Top"
                                     Style="{StaticResource RoleTrigger}"
                                     Text="{Binding TargetAccountNumber, UpdateSourceTrigger=PropertyChanged}"
-                                    TextWrapping="Wrap" />
+                                    TextWrapping="Wrap" />-->
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="auto">
                                         <TextBlock Margin="15 0 0 0" Text="Количество, "/>
