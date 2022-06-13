@@ -362,7 +362,7 @@ namespace BankA
                             flag = true;
                             TargetAccount = account;
                             _selectedDepartment = dep;
-                            SelectedDepartment = _selectedDepartment;      //SelectedDepartment = dep; //так вместо пред двух строк - не годится. переполняется стек
+                            //SelectedDepartment = _selectedDepartment;   <- ошибка    //SelectedDepartment = dep; //так вместо пред двух строк - не годится. переполняется стек
                             _selectedClient = client;
                             OnPropertyChanged();
                             break;
