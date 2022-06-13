@@ -109,7 +109,7 @@ namespace BankA
         {
             get { return _sourceAccountFormatString; }
             set { _sourceAccountFormatString = value;
-                OnPropertyChanged("SourceAccountFormatString");
+                OnPropertyChanged();
             }
         }
 
@@ -347,7 +347,10 @@ namespace BankA
             InfoMessage = "";
             if (TargetAccountNumber?.Length > 20) { InfoMessage = "Ошибочный номер счета"; return; }
             if (TargetAccountNumber?.Length < 20) { InfoMessage = ""; return; }
-            if (TargetAccountNumber==SourceAccountNumber) { InfoMessage = "Номера счетов источника и получателя одинаковы"; return; }
+            if (TargetAccountNumber==SourceAccountNumber) 
+            { 
+                InfoMessage = "Номера счетов источника и получателя одинаковы";
+            }
 
             bool flag = false;
             //Client TargetClient = new();

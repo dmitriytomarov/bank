@@ -424,25 +424,16 @@
                                                     CommandParameter="{Binding ElementName=targetAccount}"
                                                     />
                                     </StackPanel.InputBindings>
-                                    <UniformGrid Rows="1" Columns="2">
-                                        <TextBlock Margin="15 0">Перевод со счета:</TextBlock>
-                                        <TextBlock Margin="15 0" HorizontalAlignment="Right"
-                                                   Text="{Binding SourceAccountCurrency}"
-                                                   />
-                                    </UniformGrid>
+                                    <TextBlock Margin="15 0">Перевод со счета:</TextBlock>
                                     <TextBox IsReadOnly="True"
                                     Height="23"
                                     Margin="15,10"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Top"
                                     Style="{StaticResource RoleTrigger}"
-                                    Text="{Binding SourceAccountNumber}" 
+                                    Text="{Binding SourceAccountFormatString}" 
                                     TextWrapping="Wrap" />
-                                    <UniformGrid Rows="1" Columns="2">
-                                        <TextBlock Margin="15 0">На счет:</TextBlock>
-                                        <TextBlock Margin="15 0" HorizontalAlignment="Right"
-                                                   Text="{Binding TargetAccount.AccountCurrency}"/>
-                                    </UniformGrid>
+                                    <TextBlock Margin="15 0">На счет:</TextBlock>
                                     <ComboBox  x:Name="targetAccount"
                                                Margin="15,10"
                                               ItemsSource="{Binding Path=SelectedClient.Accounts}" 
@@ -458,14 +449,14 @@
 
                                     </ComboBox>
 
-                                    <TextBox
+                                    <!--<TextBox
                                     Height="23"
                                     Margin="15,10"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Top"
                                     Style="{StaticResource RoleTrigger}"
                                     Text="{Binding TargetAccountNumber, UpdateSourceTrigger=PropertyChanged}"
-                                    TextWrapping="Wrap" />
+                                    TextWrapping="Wrap" />-->
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="auto">
                                         <TextBlock Margin="15 0 0 0" Text="Количество, "/>
