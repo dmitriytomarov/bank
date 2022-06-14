@@ -294,7 +294,7 @@ namespace BankA
                     var transaction = new Transaction<Account>(SelectedAccount);
                     transaction.CloseAccount();
                 },
-                o => SelectedAccount != null
+                o => SelectedAccount != null && SelectedAccount.AccountStatus != Account.Status.Closed
                 );
             }
         }
@@ -475,7 +475,7 @@ namespace BankA
         }
 
         private Command openTransferTabCommand;
-        public ICommand OpenTransferTabCommand => openTransferTabCommand ??= new Command(OpenTransferTab, (o => SelectedAccount != null));
+        public ICommand OpenTransferTabCommand => openTransferTabCommand ??= new Command(OpenTransferTab, (o => (SelectedAccount != null && SelectedAccount.AccountStatus==Account.Status.Actual)));
 
         
 
