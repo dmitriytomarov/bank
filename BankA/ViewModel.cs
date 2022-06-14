@@ -85,7 +85,18 @@ namespace BankA
         public Account TargetAccount
         {
             get { return _targetAccount; }
-            set { _targetAccount = value; }
+            set
+            {
+                _targetAccount = value;
+                if (_targetAccount?.AccountNumber == SourceAccountNumber) { InfoMessage = "Номера счетов источника и получателя одинаковы"; } else InfoMessage = "";
+                if (TargetAccount!=null && TargetAccount?.AccountCurrency.ToString() != SourceAccountCurrency)
+                {
+                    InfoMessage = String.Format("Валюты счетов не совпадают. Будет проведена конвертация из {0} в {1} по курсу {2}.",
+                                                SourceAccountCurrency, TargetAccount?.AccountCurrency, 50);
+                }
+                CreateTotalAmountMessage();
+                OnPropertyChanged();
+            }
         }
 
 
@@ -100,10 +111,13 @@ namespace BankA
         public string SourceAccountCurrency
         {
             get { return _sourceAccountCurrency; }
-            set { _sourceAccountCurrency = value; }
+            set
+            {
+                _sourceAccountCurrency = value;
+            }
         }
 
-        
+
         private string _sourceAccountFormatString;  // в одной строке номер счета и валюта счета
         public string SourceAccountFormatString
         {
@@ -344,13 +358,9 @@ namespace BankA
 
         private void VerifyAccountNumber()
         {
-            InfoMessage = "";
+            InfoMessage = ""; 
             if (TargetAccountNumber?.Length > 20) { InfoMessage = "Ошибочный номер счета"; return; }
             if (TargetAccountNumber?.Length < 20) { InfoMessage = ""; return; }
-            if (TargetAccountNumber==SourceAccountNumber) 
-            { 
-                InfoMessage = "Номера счетов источника и получателя одинаковы";
-            }
 
             bool flag = false;
             //Client TargetClient = new();
@@ -375,12 +385,7 @@ namespace BankA
                 if (flag) break;
             }
             if (!flag) { InfoMessage = "Номер счета не найден."; return; }
-            if (TargetAccount?.AccountCurrency.ToString() != SourceAccountCurrency)
-            {
-                InfoMessage = String.Format("Валюты счетов не совпадают. Будет проведена конвертация из {0} в {1} по курсу {2}.",
-                    SourceAccountCurrency, TargetAccount?.AccountCurrency, 50
-                    );
-            }
+            
             return;
         }
 
@@ -488,8 +493,9 @@ namespace BankA
             SourceAccountFormatString = $"{SourceAccountNumber}   [{SourceAccountCurrency}]";
 
             UpdateBottomInfoMessage("Выбрать клиента в списке или CTRL + V - вставить номер счета из буфера");
-            TargetAccountNumber = "";
-            TransferAmount = "10000";
+            //TargetAccountNumber = "";
+            TargetAccount = null;
+            TransferAmount = "0";
 
         }
 
@@ -520,6 +526,8 @@ namespace BankA
                                                                     o=> !String.IsNullOrEmpty(_changeBuffer)
                                                                     );
 
+
+        
     }
 
 }

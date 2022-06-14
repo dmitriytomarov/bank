@@ -434,10 +434,11 @@
                                     Text="{Binding SourceAccountFormatString}" 
                                     TextWrapping="Wrap" />
                                     <TextBlock Margin="15 0">На счет:</TextBlock>
-                                    <ComboBox  x:Name="targetAccount"
-                                               Margin="15,10"
+                                    <ComboBox x:Name="targetAccount"
+                                              Margin="15,10"
                                               ItemsSource="{Binding Path=SelectedClient.Accounts}" 
-                                              SelectedItem="{Binding Path=TargetAccount, Mode=TwoWay}">
+                                              SelectedItem="{Binding Path=TargetAccount, Mode=TwoWay}"
+                                              >
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
