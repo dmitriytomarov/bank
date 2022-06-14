@@ -526,7 +526,10 @@ namespace BankA
                                                                     o=> !String.IsNullOrEmpty(_changeBuffer)
                                                                     );
 
+        public void Test()
+        {
 
+        }
         
     }
 
