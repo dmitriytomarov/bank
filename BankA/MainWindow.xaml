@@ -22,6 +22,8 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <local:ConvertBoolVisibilityAddMoneyTextbox x:Key="AddMoneyTextboxVisibilityConverter"/>
+        <local:ConvertAddMoneyAmount x:Key="AmountConverter"/>
     </Window.Resources>
     <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
@@ -81,7 +83,7 @@
             </ListBox>
 
             <Grid Grid.Column="2">
-                <TabControl x:Name="tabs">
+                <TabControl x:Name="tabs" Height="40" VerticalAlignment="Top" VerticalContentAlignment="Center">
                     <TabControl.InputBindings>
                         <KeyBinding Key="C" Modifiers="Ctrl" 
                                     Command="{Binding CopyCurrentAccountNumber}"
