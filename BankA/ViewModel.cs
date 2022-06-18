@@ -92,7 +92,7 @@ namespace BankA
                 if (TargetAccount != null && TargetAccount?.AccountCurrency.ToString() != SourceAccountCurrency)
                 {
                     InfoMessage = String.Format("Валюты счетов не совпадают. Будет проведена конвертация из {0} в {1} по курсу {2}.",
-                                                SourceAccountCurrency, TargetAccount?.AccountCurrency, 50);
+                                                SourceAccountCurrency, TargetAccount?.AccountCurrency, new MockConverter().Convert(_sourceAccount.AccountCurrency,TargetAccount.AccountCurrency));
                 }
                 CreateTotalAmountMessage();
                 OnPropertyChanged();
@@ -334,7 +334,10 @@ namespace BankA
         public string TotalAmountMessage
         {
             get { return _totalAmountMessage; }
-            set { _totalAmountMessage = value; OnPropertyChanged(); }
+            set {
+                _totalAmountMessage = value;
+                //OnPropertyChanged(); 
+            }
         }
 
 
@@ -347,16 +350,20 @@ namespace BankA
         {
             get { return _transferAmount; }
             set { _transferAmount = value; 
-                CreateTotalAmountMessage(); 
+                CreateTotalAmountMessage();
+                OnPropertyChanged();
             }
         }
 
+        private decimal res;
         private void CreateTotalAmountMessage()
         {
             TotalAmountMessage = "";
-            if (!String.IsNullOrEmpty(InfoMessage))
+            if (InfoMessage.Contains("конвертация"))
             {
-                TotalAmountMessage = $"Итоговая сумма перевода:  { (Decimal.TryParse(TransferAmount, out decimal res) ? res : 0) * 50}";
+                Decimal.TryParse(TransferAmount, out res);
+                TotalAmountMessage = String.Format("Итоговая сумма перевода:\n{0}",
+                       Math.Round(res * new MockConverter().Convert(_sourceAccount.AccountCurrency, TargetAccount.AccountCurrency)),2);
             }
         }
 

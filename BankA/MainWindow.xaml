@@ -484,7 +484,7 @@
                                     CommandParameter="{Binding ElementName=tabs}"
                                     Content="Отмена" />
                                     </UniformGrid>
-                                    <TextBlock Background="Red" Text="{Binding _sourceAccount.AccountNumber}"/>
+                                    
 
                                 </StackPanel>
                                 <StackPanel Grid.Column="1">
@@ -498,9 +498,9 @@
                                                Width="200"
                                                HorizontalAlignment="Left"
                                                />
-                                    <TextBlock Text="{Binding TargetAccount.Money}" TextWrapping="Wrap" Foreground="red"
+                                    <!--<TextBlock Text="{Binding TargetAccount.Money}" TextWrapping="Wrap" Foreground="red"
                                                Margin="15 30" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100"
-                                               />
+                                               />-->
                                 </StackPanel>
                                 <!--#endregion-->
                                 <!--#region Колонка 2 со счетами клиента -->

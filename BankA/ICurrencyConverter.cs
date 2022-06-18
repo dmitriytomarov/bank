@@ -12,7 +12,7 @@ namespace BankA
     /// </summary>
     internal interface ICurrencyConverter
     {
-        public decimal Convert(Account.Currency currFrom, Account.Currency currTo);
+        public  decimal Convert(Account.Currency currFrom, Account.Currency currTo);
     }
 
     public class MockConverter : ICurrencyConverter

@@ -40,17 +40,23 @@ namespace BankA
         public bool TransferFromTo(T source, T destination, decimal amount)
         {
             //amount - сумма средств в валюте исходного счета source
-
-            MessageBox.Show(source.AccountCurrency.ToString());
-            MessageBox.Show(destination.AccountCurrency.ToString());
-
+            if (source.Money<amount)
+            {
+                MessageBox.Show($"Недостаточно средств на счете {source.AccountNumber}:  {source.Money} {source.AccountCurrency}");
+                return false;
+            }
+            source.Money -= amount;
+            destination.Money += ConvertAmount(source.AccountCurrency, destination.AccountCurrency, amount);
             return true;
         }
 
         public static decimal ConvertAmount(Account.Currency currFrom, Account.Currency currTo, decimal amount)
         {
             if (currFrom == currTo) return amount;
-            return 100;
+            ICurrencyConverter converter = new MockConverter();
+
+            return Math.Round(amount * converter.Convert(currFrom,currTo), 2);
+
         }
 
     }
