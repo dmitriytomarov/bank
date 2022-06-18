@@ -30,3 +30,5 @@ C:\Users\Admin\source\repos\WpfNet13BankA\BankA\obj\Debug\net6.0-windows\App.bam
 C:\Users\Admin\source\repos\WpfNet13BankA\BankA\bin\Debug\net6.0-windows\FontAwesome5.Net.dll
 C:\Users\Admin\source\repos\WpfNet13BankA\BankA\bin\Debug\net6.0-windows\FontAwesome5.dll
 C:\Users\Admin\source\repos\WpfNet13BankA\BankA\obj\Debug\net6.0-windows\BankA.csproj.CopyComplete
+C:\Users\Admin\source\repos\WpfNet13BankA\BankA\bin\Debug\net6.0-windows\MaterialDesignColors.dll
+C:\Users\Admin\source\repos\WpfNet13BankA\BankA\bin\Debug\net6.0-windows\MaterialDesignThemes.Wpf.dll

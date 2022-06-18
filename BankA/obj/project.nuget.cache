@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "Ryh2fByqzMIWSTjIjhGmjY3EsyJoP0MJ/XoWIYrvwXtbGd/DpeQZmEW1UiDBp36Z0DbaOhm7nf0/7iSRNiDoWw==",
+  "dgSpecHash": "hnji9Zc+2HxUxc0ywGT3cpv0aM/1aY40q5zu0kLceKYUOafNd40AUzL0owrk82kVPqpXITdg37rdntPqL9uDRQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\source\\repos\\WpfNet13BankA\\BankA\\BankA.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Admin\\.nuget\\packages\\fontawesome5\\2.1.6\\fontawesome5.2.1.6.nupkg.sha512"
+    "C:\\Users\\Admin\\.nuget\\packages\\fontawesome5\\2.1.6\\fontawesome5.2.1.6.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\materialdesigncolors\\2.0.6\\materialdesigncolors.2.0.6.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\materialdesignthemes\\4.5.0\\materialdesignthemes.4.5.0.nupkg.sha512"
   ],
   "logs": []
 }

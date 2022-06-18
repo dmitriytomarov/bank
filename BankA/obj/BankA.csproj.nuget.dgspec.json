@@ -46,6 +46,10 @@
             "FontAwesome5": {
               "target": "Package",
               "version": "[2.1.6, )"
+            },
+            "MaterialDesignThemes": {
+              "target": "Package",
+              "version": "[4.5.0, )"
             }
           },
           "imports": [
