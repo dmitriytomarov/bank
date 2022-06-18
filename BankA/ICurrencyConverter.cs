@@ -8,23 +8,38 @@ using System.Windows;
 namespace BankA
 {
     /// <summary>
-    /// Конвертер валют. Возвращает double коэффициент на который надо умножить чтобы получить сумму во второй валюте из суммы первой
+    /// Конвертер валют. Возвращает decmal коэффициент на который надо умножить чтобы получить сумму во второй валюте из суммы первой
     /// </summary>
     internal interface ICurrencyConverter
     {
-        public double Convert(Account.Currency currFrom, Account.Currency currTo);
+        public decimal Convert(Account.Currency currFrom, Account.Currency currTo);
     }
 
-    public class Converter : ICurrencyConverter
+    public class MockConverter : ICurrencyConverter
     {
-        public double Convert(Account.Currency currFrom, Account.Currency currTo)
+        public decimal Convert(Account.Currency currFrom, Account.Currency currTo)
         {
-            if (currFrom != currTo)
-            {
-                MessageBox.Show("Реализация конвертера нужна. Возвращаю 1,0");
-                return 1.0;
-            }
-            return 1.0;
+
+            if (currFrom == currTo) return 1m;
+
+            Dictionary<string,decimal> rates = new();
+
+            rates.Add("EURRUR", 59.33m);
+            rates.Add("EURUSD", 1.05m);
+            rates.Add("EURCNY", 7.03m);
+            rates.Add("USDRUR", 56.71m);
+            rates.Add("USDEUR", 0.95247m);
+            rates.Add("USDCNY", 6.63m);
+            rates.Add("RURUSD", 0.017634m);
+            rates.Add("RUREUR", 0.016855m);
+            rates.Add("RURCNY", 0.11685m);
+            rates.Add("CNYRUR", 8.56m);
+            rates.Add("CNYEUR", 0.14223m);
+            rates.Add("CNYUSD", 0.15091m);
+
+            string s = currFrom.ToString() + currTo.ToString();
+
+            return rates[s];
         }
     }
 }

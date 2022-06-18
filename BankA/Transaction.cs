@@ -39,11 +39,18 @@ namespace BankA
 
         public bool TransferFromTo(T source, T destination, decimal amount)
         {
-            //amount - сумма средств в валюте счета source
+            //amount - сумма средств в валюте исходного счета source
+
             MessageBox.Show(source.AccountCurrency.ToString());
             MessageBox.Show(destination.AccountCurrency.ToString());
 
             return true;
+        }
+
+        public static decimal ConvertAmount(Account.Currency currFrom, Account.Currency currTo, decimal amount)
+        {
+            if (currFrom == currTo) return amount;
+            return 100;
         }
 
     }
