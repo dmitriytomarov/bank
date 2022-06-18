@@ -37,8 +37,12 @@ namespace BankA
             return true;
         }
 
-        public bool TransferFromTo(T sourse, T destination, decimal amount)
+        public bool TransferFromTo(T source, T destination, decimal amount)
         {
+            //amount - сумма средств в валюте счета source
+            MessageBox.Show(source.AccountCurrency.ToString());
+            MessageBox.Show(destination.AccountCurrency.ToString());
+
             return true;
         }
 

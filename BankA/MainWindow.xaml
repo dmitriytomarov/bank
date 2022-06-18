@@ -373,7 +373,7 @@
                                                                             Foreground="Green" IsHitTestVisible="False"/>
                                                             </Grid>
                                                         </Button>
-                                                        <Button Command="{Binding AddMoneyCommandCansel}" Width="25" Height="20" Margin="5 0 0 0">
+                                                        <Button Command="{Binding AddMoneyCommandCancel}" Width="25" Height="20" Margin="5 0 0 0">
                                                             <Grid>
                                                                 <fa:FontAwesome Icon="Solid_Times" Height="15" 
                                                                             Foreground="red" IsHitTestVisible="False"/>
@@ -484,7 +484,7 @@
                                     CommandParameter="{Binding ElementName=tabs}"
                                     Content="Отмена" />
                                     </UniformGrid>
-                                    <TextBlock Background="Red" Text="{Binding TargetAccountNumber}"/>
+                                    <TextBlock Background="Red" Text="{Binding _sourceAccount.AccountNumber}"/>
 
                                 </StackPanel>
                                 <StackPanel Grid.Column="1">

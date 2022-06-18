@@ -89,7 +89,7 @@ namespace BankA
             {
                 _targetAccount = value;
                 if (_targetAccount?.AccountNumber == SourceAccountNumber) { InfoMessage = "Номера счетов источника и получателя одинаковы"; } else InfoMessage = "";
-                if (TargetAccount!=null && TargetAccount?.AccountCurrency.ToString() != SourceAccountCurrency)
+                if (TargetAccount != null && TargetAccount?.AccountCurrency.ToString() != SourceAccountCurrency)
                 {
                     InfoMessage = String.Format("Валюты счетов не совпадают. Будет проведена конвертация из {0} в {1} по курсу {2}.",
                                                 SourceAccountCurrency, TargetAccount?.AccountCurrency, 50);
@@ -116,6 +116,7 @@ namespace BankA
                 _sourceAccountCurrency = value;
             }
         }
+        public Account _sourceAccount {get;set;}
 
 
         private string _sourceAccountFormatString;  // в одной строке номер счета и валюта счета
@@ -288,7 +289,7 @@ namespace BankA
                 );
             }
         }
-        public Command AddMoneyCommandCansel
+        public Command AddMoneyCommandCancel
         {
             get
             {
@@ -339,6 +340,9 @@ namespace BankA
 
         private string _transferAmount;
 
+        /// <summary>
+        /// Сумма перевода в исходной валюте (валюте счета отправителя)
+        /// </summary>
         public string TransferAmount
         {
             get { return _transferAmount; }
@@ -352,7 +356,7 @@ namespace BankA
             TotalAmountMessage = "";
             if (!String.IsNullOrEmpty(InfoMessage))
             {
-                TotalAmountMessage = $"Итоговая сумма перевода:  {Convert.ToDecimal(TransferAmount) * 50}";
+                TotalAmountMessage = $"Итоговая сумма перевода:  { (Decimal.TryParse(TransferAmount, out decimal res) ? res : 0) * 50}";
             }
         }
 
@@ -390,11 +394,9 @@ namespace BankA
         }
         public Command TransferCommand => new Command(o =>
         {
-            if (String.IsNullOrEmpty(SelectedAccount?.AccountNumber)) return; /// ВОПРОС возм убрать5555555
-            if (true /*SelectedAccount.AccountCurrency!=TargetAccount.AccountCurrency*/)
-            {
-            }
-
+            //if (String.IsNullOrEmpty(SelectedAccount?.AccountNumber)) return; /// если команда работает значит уже ок
+            var transaction = new Transaction<Account>(_sourceAccount)
+                          .TransferFromTo(_sourceAccount,  TargetAccount, Convert.ToDecimal(TransferAmount));
 
         },
             o => !String.IsNullOrEmpty(SourceAccountNumber) && !String.IsNullOrEmpty(TargetAccountNumber) && Decimal.TryParse(TransferAmount, out decimal res) && res>0
@@ -490,6 +492,7 @@ namespace BankA
         {
             
             ((TabControl)tabs).SelectedIndex += 1;  //переключение на вкладку перевода средств
+            _sourceAccount = SelectedAccount;
             SourceAccountNumber = SelectedAccount.AccountNumber;
             SourceAccountCurrency = SelectedAccount.AccountCurrency.ToString();
             SourceAccountFormatString = $"{SourceAccountNumber}   [{SourceAccountCurrency}]";
