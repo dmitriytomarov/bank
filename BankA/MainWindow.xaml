@@ -480,11 +480,12 @@
                                     Content="Перевести" />
                                         <Button
                                     Margin="10 10"
-                                    Command="{Binding TransferCommandCansel}"
+                                    Command="{Binding TransferCommandCancel}"
                                     CommandParameter="{Binding ElementName=tabs}"
                                     Content="Отмена" />
                                     </UniformGrid>
-                                    
+                                    <TextBlock Background="Red" Text="{Binding TargetAccountNumber}"/>
+
                                 </StackPanel>
                                 <StackPanel Grid.Column="1">
                                     <TextBlock Text="{Binding InfoMessage}" TextWrapping="Wrap" Foreground="red"

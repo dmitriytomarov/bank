@@ -388,7 +388,6 @@ namespace BankA
             
             return;
         }
-
         public Command TransferCommand => new Command(o =>
         {
             if (String.IsNullOrEmpty(SelectedAccount?.AccountNumber)) return; /// ВОПРОС возм убрать5555555
@@ -397,10 +396,11 @@ namespace BankA
             }
 
 
-        }
+        },
+            o => !String.IsNullOrEmpty(SourceAccountNumber) && !String.IsNullOrEmpty(TargetAccountNumber) && Decimal.TryParse(TransferAmount, out decimal res) && res>0
         );
 
-        public Command TransferCommandCansel => new Command(tab =>
+        public Command TransferCommandCancel => new Command(tab =>
         {
             ((TabControl)tab).SelectedIndex -= 1;
             SourceAccountNumber = "";
@@ -480,7 +480,9 @@ namespace BankA
         }
 
         private Command openTransferTabCommand;
-        public ICommand OpenTransferTabCommand => openTransferTabCommand ??= new Command(OpenTransferTab, (o => (SelectedAccount != null && SelectedAccount.AccountStatus==Account.Status.Actual)));
+        public ICommand OpenTransferTabCommand => openTransferTabCommand ??= new Command(
+                                                                                OpenTransferTab, 
+                                                                                o => SelectedAccount != null && SelectedAccount.AccountStatus==Account.Status.Actual);
 
         
 
@@ -495,7 +497,7 @@ namespace BankA
             UpdateBottomInfoMessage("Выбрать клиента в списке или CTRL + V - вставить номер счета из буфера");
             //TargetAccountNumber = "";
             TargetAccount = null;
-            TransferAmount = "0";
+            TransferAmount = "";
 
         }
 
