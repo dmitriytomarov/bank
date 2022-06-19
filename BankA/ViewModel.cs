@@ -334,10 +334,7 @@ namespace BankA
         public string TotalAmountMessage
         {
             get { return _totalAmountMessage; }
-            set {
-                _totalAmountMessage = value;
-                //OnPropertyChanged(); 
-            }
+            set { _totalAmountMessage = value; }
         }
 
 
@@ -356,14 +353,16 @@ namespace BankA
         }
 
         private decimal res;
+        private decimal res2;
         private void CreateTotalAmountMessage()
         {
             TotalAmountMessage = "";
             if (InfoMessage.Contains("конвертация"))
             {
                 Decimal.TryParse(TransferAmount, out res);
-                TotalAmountMessage = String.Format("Итоговая сумма перевода:\n{0}",
-                       Math.Round(res * new MockConverter().Convert(_sourceAccount.AccountCurrency, TargetAccount.AccountCurrency)),2);
+                res *= new MockConverter().Convert(_sourceAccount.AccountCurrency, TargetAccount.AccountCurrency);
+                res = Math.Round(res, 2);
+                TotalAmountMessage = String.Format("Итоговая сумма получателю:\n{0:N2}  {1}",res,TargetAccount.AccountCurrency);
             }
         }
 

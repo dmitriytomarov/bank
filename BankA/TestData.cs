@@ -28,9 +28,9 @@ namespace BankA
                         $"Отчество{i}{j}",
                         $"+7 977-{rnd.Next(1000, 9999)}",
                         $"{rnd.Next(1000, 9999)} {rnd.Next(100000, 900000)}"); //паспорт
-                    client.Accounts.Add(new StandartCurrentAccount(Account.Currency.RUR, client));
-                    client.Accounts.Add(new StandartCurrentAccount(Account.Currency.EUR, client));
-                    client.Accounts.Add(new StandartCurrentAccount(Account.Currency.USD, client));
+                    client.Accounts.Add(new StandartCurrentAccount(Account.Currency.RUR, client) { Money = rnd.Next(10000, 31554) * 100 });
+                    client.Accounts.Add(new StandartCurrentAccount(Account.Currency.EUR, client) { Money = rnd.Next(500, 3791) * 100 });
+                    client.Accounts.Add(new StandartCurrentAccount(Account.Currency.USD, client) { Money = rnd.Next(500, 3791) * 100 });
                     department.Clients.Add(client);
 
                 }
