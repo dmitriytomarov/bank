@@ -86,6 +86,12 @@
                         <KeyBinding Key="C" Modifiers="Ctrl" 
                                     Command="{Binding CopyCurrentAccountNumber}"
                                     CommandParameter="{Binding SelectedAccount.AccountNumber}" />
+                        <KeyBinding Key="Enter"
+                                    Command="{Binding TransferCommand}"
+                                    CommandParameter="{Binding ElementName=tabs}"/>
+                        <KeyBinding Key="Esc"
+                                    Command="{Binding TransferCommandCancel}"
+                                    CommandParameter="{Binding ElementName=tabs}"/>
                     </TabControl.InputBindings>
                     <TabItem Header="Информация">
                         <Grid ShowGridLines="False">

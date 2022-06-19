@@ -46,7 +46,9 @@ namespace BankA
                 return false;
             }
             source.Money -= amount;
-            destination.Money += ConvertAmount(source.AccountCurrency, destination.AccountCurrency, amount);
+            decimal amountConverted = ConvertAmount(source.AccountCurrency, destination.AccountCurrency, amount);
+            destination.Money += amountConverted;
+            MessageBox.Show($"Исполнено:\n\nсчет {source.AccountNumber}  -{amount} {source.AccountCurrency}\nсчет {destination.AccountNumber}  +{amountConverted} {destination.AccountCurrency}"); 
             return true;
         }
 

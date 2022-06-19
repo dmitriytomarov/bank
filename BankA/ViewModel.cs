@@ -394,28 +394,31 @@ namespace BankA
                 }
                 if (flag) break;
             }
-            if (!flag) { InfoMessage = "Номер счета не найден."; return; }
-            
+            if (!flag) InfoMessage = "Номер счета не найден."; 
             return;
         }
-        public Command TransferCommand => new Command(o =>
+
+        public Command TransferCommand => new Command(tab =>
         {
-            //if (String.IsNullOrEmpty(SelectedAccount?.AccountNumber)) return; /// если команда работает значит уже ок
             var transaction = new Transaction<Account>(_sourceAccount)
                           .TransferFromTo(_sourceAccount,  TargetAccount, Convert.ToDecimal(TransferAmount));
-
+            ReturnPreviousTab(tab); 
         },
             o => !String.IsNullOrEmpty(SourceAccountNumber) && !String.IsNullOrEmpty(TargetAccountNumber) && Decimal.TryParse(TransferAmount, out decimal res) && res>0
         );
 
-        public Command TransferCommandCancel => new Command(tab =>
+        public Command TransferCommandCancel => new Command(tab => ReturnPreviousTab(tab));
+
+        private void ReturnPreviousTab(object tab)
         {
             ((TabControl)tab).SelectedIndex -= 1;
             SourceAccountNumber = "";
             UpdateBottomInfoMessage("");
+            TransferAmount = "";
+            SelectedDepartment = tempDepartment;  // возвращаемся к клиенту отправителю
+            SelectedClient = temp;
+            SelectedAccount = _sourceAccount;
         }
-     );
-
 
         public Command PrintLogs
         {
@@ -463,9 +466,8 @@ namespace BankA
                         SelectedDepartment.Clients = new ObservableCollection<Client>(SelectedDepartment.Clients.OrderByDescending(e => e.LastName));
                         SortDescription = "Сортировка (а-Я)";
                         break;
-                    default: break;
                 }
-                Client temp = SelectedClient;
+                temp = SelectedClient;
                 SelectedDepartment = SelectedDepartment;
                 SelectedClient = temp;
                 _sortFlag = !_sortFlag;
@@ -492,13 +494,21 @@ namespace BankA
                                                                                 OpenTransferTab, 
                                                                                 o => SelectedAccount != null && SelectedAccount.AccountStatus==Account.Status.Actual);
 
-        
-
+        /// <summary>
+        /// Для запоминания ранее выбранной Группы при переключениях сортировке и отмене
+        /// </summary>
+        private Department tempDepartment;
+        /// <summary>
+        /// Для запоминания ранее выбранного клиента при переключениях сортировке и отмене
+        /// </summary>
+        private Client temp;
         private void OpenTransferTab(object tabs)
         {
             
             ((TabControl)tabs).SelectedIndex += 1;  //переключение на вкладку перевода средств
             _sourceAccount = SelectedAccount;
+            temp = _selectedClient;
+            tempDepartment = SelectedDepartment; //запоминаем группу и клиента отправителя, чтобы при отмене переключиться обратно к ним
             SourceAccountNumber = SelectedAccount.AccountNumber;
             SourceAccountCurrency = SelectedAccount.AccountCurrency.ToString();
             SourceAccountFormatString = $"{SourceAccountNumber}   [{SourceAccountCurrency}]";
