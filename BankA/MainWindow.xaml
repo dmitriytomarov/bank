@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:BankA"
     Title="MainWindow"
-    Width="1150"
+    Width="1300"
     Height="450"
     mc:Ignorable="d">
     <Window.DataContext>
@@ -324,13 +324,14 @@
                                              ItemsSource="{Binding SelectedClient.Accounts}" SelectedItem="{Binding SelectedAccount}">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding AccountNumber}" Margin="0 0 10 0" Width="130"/>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                                    <TextBlock Text="{Binding AccountNumber}" Margin="0 0 8 0" Width="130"/>
                                                     <TextBlock Text="{Binding AccountCurrency}"  Margin="0 0 10 0"  Width="25"/>
                                                     <TextBlock Text="{Binding AccountStatus}"  Margin="0 0 0 0"  Width="50"/>
-                                                    <TextBlock Text="{Binding Money, StringFormat='# ### ### ### ###.00'}" TextAlignment="Right" Margin="0 0 10 0" Width="80"/>
+                                                    <TextBlock Text="{Binding Money, StringFormat='### ### ### ##0.00'}" TextAlignment="Right" Margin="0 0 10 0" Width="130"/>
                                                     <TextBlock Text="{Binding AccountCurrency}"/>
-                                                    <TextBlock Text=""/>
+                                                    <TextBlock Text="" Margin="30 0 0 0"/>
+                                                    <TextBlock Text="{Binding Type}" Width="120"  HorizontalAlignment="Right"/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>

@@ -33,6 +33,7 @@ namespace BankA
         }
         public Currency AccountCurrency { get; init; }
         public DateTime OpenDate { get; private set; }
+        public string Type { get; init; }
 
         private Status _accountStatus;
         public Status AccountStatus
@@ -45,7 +46,7 @@ namespace BankA
         }
 
 
-
+        
 
         public enum Status { Reserved, Actual, Blocked, Closed, Undefined }
         public enum Currency { EUR = 978, RUR = 810, USD = 840, CNY = 156 }
@@ -80,6 +81,7 @@ namespace BankA
             Money = 0;
             OpenDate = DateTime.Now;
             AccountStatus = Status.Actual;
+            Type = "Текущий";
         }
 
     }
@@ -94,6 +96,8 @@ namespace BankA
     {
         public decimal DepositRate { get; } 
         public DepositAccount(Currency cur, Client targetClient) : base(cur, targetClient) 
-        { DepositRate = new MockRates().GetCurrentDepositRate(cur); }
+        { DepositRate = new MockRates().GetCurrentDepositRate(cur); 
+            Type = "Депозитный";
+        }
     }
 }
