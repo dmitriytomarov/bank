@@ -196,6 +196,9 @@ namespace BankA
             }
         }
 
+        public bool CheckedStandartAccountType { get; set; } 
+        public bool CheckedDepositAccountType { get; set; }
+
         public bool[] CheckedCurrencyCheckBoxes { get; set; } = { true, false, false, false };
         private readonly Account.Currency[] checkedCurrency = { Account.Currency.RUR, Account.Currency.EUR, Account.Currency.USD, Account.Currency.CNY };
 
@@ -210,13 +213,16 @@ namespace BankA
                     for (int i = 0; i < CheckedCurrencyCheckBoxes.Length; i++)
                     {
                         if (!CheckedCurrencyCheckBoxes[i]) continue;
-                        SelectedClient?.Accounts.Add(new StandartCurrentAccount(checkedCurrency[i], SelectedClient));
+                        if (CheckedStandartAccountType) SelectedClient?.Accounts.Add(new StandartCurrentAccount(checkedCurrency[i], SelectedClient));
+                        if (CheckedDepositAccountType) SelectedClient?.Accounts.Add(new DepositAccount(checkedCurrency[i], SelectedClient));
                     }
                     CheckedCurrencyCheckBoxes[0] = true; // выбор валют счетов по дефолту (только RUR). если убрать то будет запоминаться последний сделанный выбор
                     CheckedCurrencyCheckBoxes[1] = false;
                     CheckedCurrencyCheckBoxes[2] = false;
                     CheckedCurrencyCheckBoxes[3] = false;
-                });
+                },
+                o => CheckedStandartAccountType || CheckedDepositAccountType
+                );
             }
         }
         public Command OpenAccountResultNo

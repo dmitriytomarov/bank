@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using static BankA.Account;
 
 namespace BankA
 {
     internal interface IRateProvider
     {
-        public decimal GetCurrentDepositRate();
+        public decimal GetCurrentDepositRate(Currency cur);
     }
 }

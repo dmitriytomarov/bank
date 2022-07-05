@@ -94,6 +94,6 @@ namespace BankA
     {
         public decimal DepositRate { get; } 
         public DepositAccount(Currency cur, Client targetClient) : base(cur, targetClient) 
-        { DepositRate = new MockRates().GetCurrentDepositRate(); }
+        { DepositRate = new MockRates().GetCurrentDepositRate(cur); }
     }
 }

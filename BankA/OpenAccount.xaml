@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankA"
         mc:Ignorable="d"
-        Title="OpenAccount" Height="180" Width="300">
+        Title="OpenAccount" Height="200" Width="400">
     <Window.InputBindings>
         <KeyBinding Key="Esc" Command="{Binding OpenAccountResultNo}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
     </Window.InputBindings>
@@ -20,10 +20,14 @@
                     <Setter Property="Padding" Value="20 3 20 3"/>
                 </Style>
             </StackPanel.Resources>
+            <StackPanel Orientation="Horizontal"  Margin ="0 15 0 0" HorizontalAlignment="Center" Width="200">
+                <RadioButton Margin="0 0 35 0" IsChecked="{Binding CheckedStandartAccountType}">Текущий</RadioButton>
+                <RadioButton IsChecked="{Binding CheckedDepositAccountType}">Депозитный</RadioButton>
+            </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 20 0 0" HorizontalAlignment="Center">
-                <CheckBox IsChecked="{Binding CheckedCurrencyCheckBoxes[0]}" Content="RUR"/>
-                <CheckBox IsChecked="{Binding CheckedCurrencyCheckBoxes[1]}" Content="EUR"/>
-                <CheckBox IsChecked="{Binding CheckedCurrencyCheckBoxes[2]}" Content="USD"/>
+                <CheckBox IsChecked="{Binding CheckedCurrencyCheckBoxes[0]}" Content="RUR" Margin="0 0 20 0"/>
+                <CheckBox IsChecked="{Binding CheckedCurrencyCheckBoxes[1]}" Content="EUR" Margin="0 0 20 0"/>
+                <CheckBox IsChecked="{Binding CheckedCurrencyCheckBoxes[2]}" Content="USD" Margin="0 0 20 0"/>
                 <CheckBox IsChecked="{Binding CheckedCurrencyCheckBoxes[3]}" Content="CNY"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 20" HorizontalAlignment="Center">
