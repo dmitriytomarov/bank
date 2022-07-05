@@ -88,4 +88,12 @@ namespace BankA
     {
         public StandartCurrentAccount(Currency cur, Client targetClient) : base(cur, targetClient) { }
     }
+
+
+    public class DepositAccount : Account
+    {
+        public decimal DepositRate { get; } 
+        public DepositAccount(Currency cur, Client targetClient) : base(cur, targetClient) 
+        { DepositRate = new MockRates().GetCurrentDepositRate(); }
+    }
 }
