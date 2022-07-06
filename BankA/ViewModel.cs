@@ -92,7 +92,7 @@ namespace BankA
                 if (TargetAccount != null && TargetAccount?.AccountCurrency.ToString() != SourceAccountCurrency)
                 {
                     InfoMessage = String.Format("Валюты счетов не совпадают. Будет проведена конвертация из {0} в {1} по курсу {2}.",
-                                                SourceAccountCurrency, TargetAccount?.AccountCurrency, new MockConverter().Convert(_sourceAccount.AccountCurrency,TargetAccount.AccountCurrency));
+                                                SourceAccountCurrency, TargetAccount?.AccountCurrency, new MockConverter().Convert(SourceAccount.AccountCurrency,TargetAccount.AccountCurrency));
                 }
                 CreateTotalAmountMessage();
                 OnPropertyChanged();
@@ -116,7 +116,7 @@ namespace BankA
                 _sourceAccountCurrency = value;
             }
         }
-        public Account _sourceAccount {get;set;}
+        public Account SourceAccount {get;set;}
 
 
         private string _sourceAccountFormatString;  // в одной строке номер счета и валюта счета
@@ -139,7 +139,6 @@ namespace BankA
                 _targetAccountNumber = value;
                 VerifyAccountNumber();
                 OnPropertyChanged();
-
             }
         }
 
@@ -154,7 +153,7 @@ namespace BankA
                 _selectedAccount = value;
                 ShowAddAmountTextboxFlag = false;
                 if (_selectedAccount == null) { UpdateBottomInfoMessage(""); }
-                else { UpdateBottomInfoMessage("CTRL + C - скопировать номер счета в буфер");}
+                else { UpdateBottomInfoMessage("CTRL + C - запомнить номер выделенного счета");}
                 OnPropertyChanged();
             }
         }
@@ -366,7 +365,7 @@ namespace BankA
             if (InfoMessage.Contains("конвертация"))
             {
                 Decimal.TryParse(TransferAmount, out res);
-                res *= new MockConverter().Convert(_sourceAccount.AccountCurrency, TargetAccount.AccountCurrency);
+                res *= new MockConverter().Convert(SourceAccount.AccountCurrency, TargetAccount.AccountCurrency);
                 res = Math.Round(res, 2);
                 TotalAmountMessage = String.Format("Итоговая сумма получателю:\n{0:N2}  {1}",res,TargetAccount.AccountCurrency);
             }
@@ -406,14 +405,15 @@ namespace BankA
 
         public Command TransferCommand => new Command(tab =>
         {
-            var transaction = new Transaction<Account>(_sourceAccount)
-                          .TransferFromTo(_sourceAccount,  TargetAccount, Convert.ToDecimal(TransferAmount));
+            var transaction = new Transaction<Account>(SourceAccount)
+                          .TransferFromTo(SourceAccount,  TargetAccount, Convert.ToDecimal(TransferAmount));
             ReturnPreviousTab(tab); 
         },
             o => !String.IsNullOrEmpty(SourceAccountNumber) && !String.IsNullOrEmpty(TargetAccountNumber) && Decimal.TryParse(TransferAmount, out decimal res) && res>0
         );
 
         public Command TransferCommandCancel => new Command(tab => ReturnPreviousTab(tab));
+        
 
         private void ReturnPreviousTab(object tab)
         {
@@ -423,7 +423,9 @@ namespace BankA
             TransferAmount = "";
             SelectedDepartment = tempDepartment;  // возвращаемся к клиенту отправителю
             SelectedClient = temp;
-            SelectedAccount = _sourceAccount;
+            SelectedAccount = SelectedClient.Accounts[0];
+            SelectedAccount = SourceAccount;
+            UpdateBottomInfoMessage("");
         }
 
         public Command PrintLogs
@@ -512,14 +514,14 @@ namespace BankA
         {
             
             ((TabControl)tabs).SelectedIndex += 1;  //переключение на вкладку перевода средств
-            _sourceAccount = SelectedAccount;
+            SourceAccount = SelectedAccount;
             temp = _selectedClient;
             tempDepartment = SelectedDepartment; //запоминаем группу и клиента отправителя, чтобы при отмене переключиться обратно к ним
             SourceAccountNumber = SelectedAccount.AccountNumber;
             SourceAccountCurrency = SelectedAccount.AccountCurrency.ToString();
             SourceAccountFormatString = $"{SourceAccountNumber}   [{SourceAccountCurrency}]";
 
-            UpdateBottomInfoMessage("Выбрать клиента в списке или CTRL + V - вставить номер счета из буфера");
+            UpdateBottomInfoMessage($"Выбрать клиента в списке или CTRL + V - вставить номер счета: {_changeBuffer}");
             //TargetAccountNumber = "";
             TargetAccount = null;
             TransferAmount = "";

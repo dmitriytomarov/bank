@@ -396,7 +396,8 @@
                             </Grid>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="Перевод средств" IsSelected="False" Opacity="1">
+                    <TabItem Header="Перевод средств" IsSelected="False" Width="0" >
+                        <!--Visibility=Hidden нельзя, не работает обработка клавиш ctrl V -->
                         <Grid ShowGridLines="False">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -405,7 +406,6 @@
                                 <RowDefinition Height="50" />
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
-                            <!--#region Строка заголовок -->
                             <Grid >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="250"/>
@@ -414,7 +414,6 @@
                                 <TextBlock HorizontalAlignment="Left" Margin="15 10" Grid.Row="0" Grid.Column="0" Text ="Клиент"/>
                                 <TextBlock HorizontalAlignment="Left" Margin="15 10" Grid.Row="0" Grid.Column="1" Text ="Счета"/>
                             </Grid>
-                            <!--#endregion-->
 
 
                             <Grid Grid.Row="1" Grid.ColumnSpan="2">
@@ -484,6 +483,7 @@
                                         <Button Margin=" 10 10"
                                     Height="23"
                                     Command="{Binding TransferCommand}"
+                                    CommandParameter="{Binding ElementName=tabs}"
                                     Content="Перевести" />
                                         <Button
                                     Margin="10 10"
