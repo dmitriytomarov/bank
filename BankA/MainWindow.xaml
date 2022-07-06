@@ -456,18 +456,12 @@
 
                                     </ComboBox>
 
-                                    <!--<TextBox
-                                    Height="23"
-                                    Margin="15,10"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Top"
-                                    Style="{StaticResource RoleTrigger}"
-                                    Text="{Binding TargetAccountNumber, UpdateSourceTrigger=PropertyChanged}"
-                                    TextWrapping="Wrap" />-->
-
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="auto">
                                         <TextBlock Margin="15 0 0 0" Text="Количество, "/>
                                         <TextBlock Margin="0 0" Text="{Binding SourceAccountCurrency}"></TextBlock>
+                                        <TextBlock Margin="10 0 0 0" Text="[макс: "/>
+                                        <TextBlock Margin="0 0" Text="{Binding SourceAccount.Money}"/>
+                                        <TextBlock Margin="0 0" Text="]"/>
                                     </StackPanel>
                                     <TextBox x:Name="transferAmount"
                                     Height="23"
