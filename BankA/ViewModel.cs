@@ -181,7 +181,7 @@ namespace BankA
                 return new Command(o =>
                 {
                     OpenAccount w = new();
-                    w.Owner = App.Current.MainWindow;
+                    w.Owner = Application.Current.Windows[0];
                     w.DataContext = this;
                     w.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                     w.ShowDialog();
