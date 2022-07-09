@@ -1,10 +1,6 @@
-﻿using BankA;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
@@ -450,7 +446,8 @@ namespace BankA
                 {
                     NewClient windowNewClient = new NewClient();
                     windowNewClient.DataContext = _newClientVMInstance;
-                    windowNewClient.Owner = Application.Current.MainWindow;
+                    //windowNewClient.Owner = Application.Current.MainWindow;//runtime fail
+                    windowNewClient.Owner = Application.Current.Windows[0];
                     windowNewClient.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                     windowNewClient.Title = "New Client";
                     windowNewClient.Show();
